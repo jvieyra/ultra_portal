@@ -26,7 +26,7 @@
 										<form method="post" action="{{ route('login') }}">
 											@csrf
 											<div class="form-group">
-												<label class="control-label mb-10" for="exampleInputEmail_2">Email</label>
+												<label class="control-label mb-10 text-white" for="exampleInputEmail_2">Correo Electrónico</label>
 												<input type="email" class="form-control" required="" id="exampleInputEmail_2" placeholder="Ingresa tu email" autofocus name="email" value="{{ old('email') }}">
 												@if($errors->has('email'))
                           <span class="invalid-feedback" role="alert">
@@ -35,7 +35,7 @@
                         @endif
 											</div>
 												<div class="form-group">
-													<label class="pull-left control-label mb-10" for="exampleInputpwd_2">Contraseña </label>
+													<label class="pull-left control-label mb-10 text-white" for="exampleInputpwd_2">Contraseña </label>
 													<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="forgot-password.html">olvidaste tu contraseña ?</a>
 													<div class="clearfix"></div>
 													<input type="password" class="form-control" required="" id="exampleInputpwd_2" placeholder="Ingresa tu password" name="password">
@@ -48,7 +48,7 @@
 													<div class="form-group">
 														<div class="checkbox checkbox-primary pr-10 pull-left">
 															<input id="checkbox_2" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} >
-															<label for="checkbox_2"> Recuerdame</label>
+															<label class="text-white" for="checkbox_2"> Recuerdame</label>
 														</div>
 														<div class="clearfix"></div>
 													</div>
@@ -70,17 +70,14 @@
 			<!-- /#wrapper -->
 
 			<!-- JavaScript -->
-
-			<!-- jQuery -->
-			<script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
-
-			<!-- Bootstrap Core JavaScript -->
-			<script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+			
+			@push('scripts-footer')
+			
 			<script src="{{ asset('vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
-
 			<!-- Slimscroll JavaScript -->
 			<script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
-
 			<!-- Init JavaScript -->
 			<script src="{{ asset('dist/js/init.js')}}"></script>
+			
+			@endpush
 @endsection

@@ -9,14 +9,11 @@ class CreateEmployeesTable extends Migration {
 	public function up(){
 
 		Schema::create('employees', function (Blueprint $table) {
-			
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->string('specific_position')->nullable();
-			$table->string('nationality')->nullable();
 			$table->timestamps();
-
 		});
 
 	}

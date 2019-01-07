@@ -18,10 +18,13 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('last_name');
-            $table->string('second_last_name');
-            $table->datetime('birthday');
-            $table->string('gender');
+            $table->string('second_last_name')->nullable();
+            $table->date('birthday');
+            $table->string('nationality')->nullable();
+            $table->string('gender');   
             $table->string('password');
+            $table->integer('department_id')->unsigned();
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

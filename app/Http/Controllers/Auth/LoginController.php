@@ -33,12 +33,16 @@ class LoginController extends Controller
 		
 		public function redirectTo(){
 			$user = Auth::user();
+
 			//employees
 			if($user->employees()->exists()){
 				return route('home.employee');
 			}
 
 			//students
+			if($user->students()->exists()){
+				return route('home.student');
+			}
 
 			//guardians
 			

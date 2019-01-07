@@ -19,6 +19,7 @@
 				</li>
 			</ul>
 		</li>
+		
 		<li>
 			<a href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr">
 				<div class="pull-left">
@@ -101,7 +102,7 @@
 		</li>
 		<li><hr class="light-grey-hr mb-10"/></li>
 		<li class="navigation-header">
-			<span>component</span>
+			<span>Administración </span>
 			<i class="zmdi zmdi-more"></i>
 		</li>
 		<li>
@@ -295,13 +296,19 @@
 			</ul>
 		</li>
 		<li>
-			<a href="javascript:void(0);" data-toggle="collapse" data-target="#maps_dr"><div class="pull-left"><i class="zmdi zmdi-map mr-20"></i><span class="right-nav-text">maps</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+			<a href="javascript:void(0);" data-toggle="collapse" data-target="#maps_dr"><div class="pull-left"><i class="zmdi zmdi-map mr-20"></i><span class="right-nav-text">Configuración</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
 			<ul id="maps_dr" class="collapse collapse-level-1">
 				<li>
-					<a href="vector-map.html">Vector Map</a>
+					<a href="{{ route('users.index') }}">Usuarios</a>
 				</li>
 				<li>
-					<a href="google-map.html">Google Map</a>
+					<a href="google-map.html">Edificios</a>
+				</li>
+				<li>
+					<a href="google-map.html">Grados</a>
+				</li>
+				<li>
+					<a href="{{ route('campus.staff') }}">Campus</a>
 				</li>
 			</ul>
 		</li>

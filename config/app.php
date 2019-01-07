@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Portal Instituto Thomas Jefferson Valle Real'),
 
     /*
     |--------------------------------------------------------------------------
@@ -150,6 +150,8 @@ return [
         /*
          * Package Service Providers...
          */
+
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
         /*
          * Application Service Providers...

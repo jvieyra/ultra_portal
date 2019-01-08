@@ -102,6 +102,7 @@ class UsersTableSeeder extends Seeder
       $studentUser->roles()->attach($roleEstandar);
 
       $student = Student::create([
+        'id'=>1,
         'user_id' => $studentUser->id,
         'homeroom' => '3A',
         'matricula' => '19-99991-1',

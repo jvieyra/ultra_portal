@@ -15,17 +15,17 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('matricula');
+            $table->foreign('matricula')->references('matricula')->on('students')->onDelete('cascade');
             $table->integer('workshop_id')->unsigned();
             $table->foreign('workshop_id')->references('id')->on('workshops')->onDelete('cascade');
+            $table->string('name');
             $table->time('start_time');
             $table->time('end_time');
             $table->integer('year_id')->unsigned();
             $table->foreign('year_id')->references('id')->on('years')->onDelete('cascade');
             $table->string('category');
             $table->string('gender');
-            $table->integer('quota');
             $table->timestamps();
         });
     }

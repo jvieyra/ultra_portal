@@ -93,6 +93,50 @@ class UsersTableSeeder extends Seeder
       ]);
       $studentUser->save();
 
+
+
+      $teacherUser = User::create([
+        'name' => "Jules",
+        'last_name'=> "Winnfield",
+        'email' => 'jules@gmail.com',
+        'nationality' => 'Mexicano',
+        'gender' => 'M',
+        'birthday' => '1988-08-03',
+        'department_id'=> 2,
+        'password'=> bcrypt('123456')
+      ]);
+      $teacherUser->save();
+
+      $employeeOne = Employee::create([
+        'user_id'=> $teacherUser->id,
+        'specific_position' => 'Docente',
+      ]);
+      $employeeOne->save();
+
+      $teacherUserTwo = User::create([
+        'name' => "Johnette",
+        'last_name'=> "Napolitano",
+        'email' => 'johnette@gmail.com',
+        'nationality' => 'Mexicano',
+        'gender' => 'F',
+        'birthday' => '1990-05-25',
+        'department_id'=> 2,
+        'password'=> bcrypt('123456')
+      ]);
+      $teacherUserTwo->save();
+
+      $employeeTwo = Employee::create([
+        'user_id'=> $teacherUserTwo->id,
+        'specific_position' => 'Docente',
+      ]);
+      $employeeTwo->save();
+
+      $roleDocente = Role::create([
+        'name' => 'docente',
+        'display_name' => 'Docente',
+        'description' => 'Usuario de tipo Docente'
+      ]);
+
       $roleEstandar = Role::create([
         'name' => 'estandar',
         'display_name' => 'Estandar',
@@ -100,12 +144,17 @@ class UsersTableSeeder extends Seeder
       ]);
 
       $studentUser->roles()->attach($roleEstandar);
+      /*teacher 1*/
+      $teacherUserTwo->roles()->attach($roleEstandar);
+      $teacherUserTwo->roles()->attach($roleDocente);
+
+      /*teacher 2*/
 
       $student = Student::create([
         'id'=>1,
         'user_id' => $studentUser->id,
         'homeroom' => '3A',
-        'matricula' => '19-99991-1',
+        'matricula' => '19-9991-1',
         'group' => 'A',
         'grade' => '3'
       ]);

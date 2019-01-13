@@ -21,7 +21,6 @@ Route::group(['prefix' => 'staff'],function(){
 	Route::get('home', 'EmployeeController@index')->name('home.employee');
 	Route::get('campus','UserController@campus')->name('campus.staff');
 
-
 	Route::resource('users','UserController');
 	Route::resource('sections','SectionController');
 	Route::get('/dtsec','SectionController@getSections')->name('datatable.sections');
@@ -35,8 +34,15 @@ Route::group(['prefix' => 'staff'],function(){
 
 Route::group(['prefix' => 'student'],function(){
 	Route::get('home', 'StudentController@index')->name('home.student');
-	
+	Route::resource('workshops','StudentWorkshopController',[ 'as' => 'student']);
 });
+
+
+/*
+$y = new App\Year;
+
+dd($y->isCurrentYear(2));
+*/
 
 
 

@@ -155,6 +155,7 @@ class UsersTableSeeder extends Seeder
         'user_id' => $studentUser->id,
         'homeroom' => '3A',
         'matricula' => '19-9991-1',
+        'code' => '19-9991-1',
         'group' => 'A',
         'grade' => '3'
       ]);

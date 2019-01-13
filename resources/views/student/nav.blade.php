@@ -4,7 +4,7 @@
 	<div class="mobile-only-brand pull-left">
 		<div class="nav-header pull-left">
 			<div class="logo-wrap">
-				<a href="index.html">
+				<a href="{{ route('home.student')}}">
 					<img class="brand-img" src="{{ asset('img/nav/logo-nav.svg')}}"  width="30" height="30" alt="brand"/>
 					<span class="brand-text"> {{ Auth::user()->name }} </span>
 				</a>

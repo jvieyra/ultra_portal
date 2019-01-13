@@ -20,6 +20,7 @@ class CreateStudentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('homeroom');
             $table->string('matricula');
+            $table->string('code');
             $table->string('group');
             $table->string('grade');
             $table->timestamps();

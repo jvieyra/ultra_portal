@@ -40,6 +40,7 @@ class StudentsTableSeeder extends Seeder {
         'user_id' => $studentUser->id,
         'homeroom' => '5A',
         'matricula' => '13-0001-1',
+        'code' => '13-0001-1',
         'group' => 'A',
         'grade' => '5'
       ]);

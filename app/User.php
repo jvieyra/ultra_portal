@@ -32,4 +32,10 @@ class User extends Authenticatable
 		public function department(){
 			return $this->belongsTo('App\Department');
 		}
+
+		public function subjects(){
+  		return $this->hasMany('App\Subject');
+  	}
+
+
 }

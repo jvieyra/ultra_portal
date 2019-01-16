@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 13-01-2019 a las 18:36:35
+-- Tiempo de generación: 16-01-2019 a las 15:07:39
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.3
 
@@ -209,7 +209,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (28, '2019_01_08_154141_table_plan_subject', 1),
 (29, '2019_01_08_154321_table_plan_student', 1),
 (30, '2019_01_10_184312_create_day_subject_table', 2),
-(31, '2019_01_13_060943_create_workshops_temp_table', 3);
+(35, '2019_01_13_060943_create_workshop_temps_table', 3);
 
 -- --------------------------------------------------------
 
@@ -318,8 +318,8 @@ INSERT INTO `plan_subject` (`id`, `plan_id`, `subject_id`, `quota`) VALUES
 (1, 1, 1, 1),
 (2, 3, 3, 1),
 (3, 1, 2, 1),
-(4, 1, 5, 2),
-(5, 1, 6, 2);
+(4, 1, 5, 1),
+(5, 1, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -580,8 +580,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `last_name`, `second_last_name`, `birthday`, `nationality`, `gender`, `password`, `department_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Pablo', 'vieyrapez@gmail.com', 'Vieyra', 'Lopez', '2019-01-09', 'Mexicano', 'M', '$2y$10$6z6rWqTskqZ.tz.C0LgQdOB.nMUhPYPxeMaRVKQEMw7QKjdP0jgWS', 1, NULL, '2019-01-09 10:31:26', '2019-01-09 10:31:26'),
-(2, 'John', 'student@student.itjvallereal.edu.mx', 'Bonachon', NULL, '2019-01-09', 'Mexicano', 'M', '$2y$10$wrY8RTPHjINXSQ6Ue34S4.p2g7Ap2H8A/iJjDCcvDPzZx/MWIWJoS', 1, '1owBpy7gjhAeeNpZVXkCLg6QyzDHhPDK5tInH0TGdThr26TsFTe46KZ9gVGU', '2019-01-09 10:31:26', '2019-01-09 10:31:26'),
+(1, 'Pablo', 'vieyrapez@gmail.com', 'Vieyra', 'Lopez', '2019-01-09', 'Mexicano', 'M', '$2y$10$6z6rWqTskqZ.tz.C0LgQdOB.nMUhPYPxeMaRVKQEMw7QKjdP0jgWS', 1, 'mPwGjBQLspAhwBVUp9ZatlY0IhH6cCN58Z3F9OwIs3a9eEmN5Ah5BGBlJ5iN', '2019-01-09 10:31:26', '2019-01-09 10:31:26'),
+(2, 'John', 'student@student.itjvallereal.edu.mx', 'Bonachon', NULL, '2019-01-09', 'Mexicano', 'M', '$2y$10$wrY8RTPHjINXSQ6Ue34S4.p2g7Ap2H8A/iJjDCcvDPzZx/MWIWJoS', 1, 'AIWvwDWxlPkD7lHAIJLt4gzTdrv9NzRCNE3mdcxOQENcFUK0xYb5DTWhqehp', '2019-01-09 10:31:26', '2019-01-09 10:31:26'),
 (3, 'Jules', 'jules@gmail.com', 'Winnfield', NULL, '1988-08-03', 'Mexicano', 'M', '$2y$10$AiT01Xf6IHPYPmmFA.1qLO/Do9f7wAFUjMFni5HnHRS9Puqkoz8jW', 2, NULL, '2019-01-09 10:31:27', '2019-01-09 10:31:27'),
 (4, 'Johnette', 'johnette@gmail.com', 'Napolitano', NULL, '1990-05-25', 'Mexicano', 'F', '$2y$10$cwZMIVljRWTuA6jYbKUPSeoJZ4Keb437cZMwJyXg1SHZLSO.JUIIi', 2, NULL, '2019-01-09 10:31:27', '2019-01-09 10:31:27'),
 (5, 'Mia', 'mwallace@student.itjvallereal.edu.mx', 'Wallace', NULL, '2010-01-22', 'Mexicano', 'F', '$2y$10$/bJgM7ZnMnBveFGb7eA2sufepkFbTI7pTgDqW4YQvvQjKIY3zczAO', 2, 'sIgyhSVndKQDz9lPeRcfFhQbFrQdVWmSsVd59wp4OmVV8s2tucdi7e29LXLY', '2019-01-09 10:31:27', '2019-01-09 10:31:27');
@@ -636,21 +636,6 @@ INSERT INTO `workshops` (`id`, `name`, `description`, `picture`, `created_at`, `
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `workshops_temp`
---
-
-CREATE TABLE `workshops_temp` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `matricula` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `subject_id` int(10) UNSIGNED NOT NULL,
-  `attempts` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `workshop_enrollment`
 --
 
@@ -659,6 +644,27 @@ CREATE TABLE `workshop_enrollment` (
   `matricula` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject_id` int(10) UNSIGNED NOT NULL,
   `year_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `workshop_enrollment`
+--
+
+INSERT INTO `workshop_enrollment` (`id`, `matricula`, `subject_id`, `year_id`, `created_at`, `updated_at`) VALUES
+(1, '13-0001-1', 2, 2, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `workshop_temps`
+--
+
+CREATE TABLE `workshop_temps` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `matricula` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -895,14 +901,6 @@ ALTER TABLE `workshops`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `workshops_temp`
---
-ALTER TABLE `workshops_temp`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `workshops_temp_matricula_foreign` (`matricula`),
-  ADD KEY `workshops_temp_subject_id_foreign` (`subject_id`);
-
---
 -- Indices de la tabla `workshop_enrollment`
 --
 ALTER TABLE `workshop_enrollment`
@@ -910,6 +908,14 @@ ALTER TABLE `workshop_enrollment`
   ADD KEY `workshop_enrollment_matricula_foreign` (`matricula`),
   ADD KEY `workshop_enrollment_subject_id_foreign` (`subject_id`),
   ADD KEY `workshop_enrollment_year_id_foreign` (`year_id`);
+
+--
+-- Indices de la tabla `workshop_temps`
+--
+ALTER TABLE `workshop_temps`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `workshop_temps_matricula_foreign` (`matricula`),
+  ADD KEY `workshop_temps_subject_id_foreign` (`subject_id`);
 
 --
 -- Indices de la tabla `years`
@@ -967,7 +973,7 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `places`
@@ -1084,15 +1090,15 @@ ALTER TABLE `workshops`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT de la tabla `workshops_temp`
---
-ALTER TABLE `workshops_temp`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `workshop_enrollment`
 --
 ALTER TABLE `workshop_enrollment`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `workshop_temps`
+--
+ALTER TABLE `workshop_temps`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -1210,19 +1216,19 @@ ALTER TABLE `user_status`
   ADD CONSTRAINT `user_status_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `workshops_temp`
---
-ALTER TABLE `workshops_temp`
-  ADD CONSTRAINT `workshops_temp_matricula_foreign` FOREIGN KEY (`matricula`) REFERENCES `students` (`matricula`) ON DELETE CASCADE,
-  ADD CONSTRAINT `workshops_temp_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
-
---
 -- Filtros para la tabla `workshop_enrollment`
 --
 ALTER TABLE `workshop_enrollment`
   ADD CONSTRAINT `workshop_enrollment_matricula_foreign` FOREIGN KEY (`matricula`) REFERENCES `students` (`matricula`) ON DELETE CASCADE,
   ADD CONSTRAINT `workshop_enrollment_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `workshop_enrollment_year_id_foreign` FOREIGN KEY (`year_id`) REFERENCES `years` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `workshop_temps`
+--
+ALTER TABLE `workshop_temps`
+  ADD CONSTRAINT `workshop_temps_matricula_foreign` FOREIGN KEY (`matricula`) REFERENCES `students` (`matricula`) ON DELETE CASCADE,
+  ADD CONSTRAINT `workshop_temps_subject_id_foreign` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

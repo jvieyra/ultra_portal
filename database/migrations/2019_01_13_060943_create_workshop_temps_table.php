@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWorkshopsTempTable extends Migration
+class CreateWorkshopTempsTable extends Migration
 {
 		/**
 		 * Run the migrations.
@@ -13,13 +13,12 @@ class CreateWorkshopsTempTable extends Migration
 		 */
 		public function up()
 		{
-				Schema::create('workshops_temp', function (Blueprint $table) {
+				Schema::create('workshop_temps', function (Blueprint $table) {
 						$table->increments('id');
 						$table->string('matricula');
 						$table->foreign('matricula')->references('matricula')->on('students')->onDelete('cascade');
 						$table->integer('subject_id')->unsigned();
 						$table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-						$table->integer('attempts');
 						$table->timestamps();
 				});
 		}

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Student;
+use App\Subject;
+use App\WorkshopTemp;
+use App\WorkshopEnrollment;
+use App\Year;
 use Validator;
 
 use Illuminate\Http\Request;
@@ -44,19 +48,43 @@ class StudentWorkshopController extends Controller {
 		 */
 		public function store(Request $request){
 			$user = Auth::user();
+			$year = new Year();
+			$currentYear = $year->currentYear();
 			$subjects = $request->all();
-			$subjects =$subjects['subjects'];
-			//dd($subjects['subjects']);
+			$countSubjects = $subjects['subjects'];
+			
 			$validator = Validator::make($request->all(),[
-				'workshops' => ['required', new ThreeCheckboxes($subjects) ],
+				'workshops' => ['required', new ThreeCheckboxes($countSubjects) ],
 			]);
 
 			if($validator->fails()) {
         return redirect()->back()->withErrors($validator)->withInput();
       }
 
-		}
+      $workshopTemp = new WorkshopTemp();
+      $saveTemp = $workshopTemp->saveWorkshopsTemp($subjects['workshops'],$user);
+      
+      if($saveTemp){
+      	//save subject workshop winner!
+      	$student = Student::find($user->student->code);
+      	$selectWorkshop = $student->selectWorkshop($subjects['workshops']);
 
+      	if($selectWorkshop){
+      		$inscription = new WorkshopEnrollment;
+      		$inscription->matricula = $student->code;
+      		$inscription->subject_id = $selectWorkshop;
+      		$inscription->year_id = $currentYear;
+      		$inscription->save();
+      		//return vista con el taller elegido.
+      		return redirect()->route('student.workshops.show',$selectWorkshop);
+
+      	}else{
+      		return back()->with('fullError', 'Error! Ya no existe cupo para las clases que seleccionaste.Flamenco, tenis, futbol');
+      	}
+      	
+      }
+
+		}
 
 		/**
 		 * Display the specified resource.
@@ -64,9 +92,11 @@ class StudentWorkshopController extends Controller {
 		 * @param  int  $id
 		 * @return \Illuminate\Http\Response
 		 */
-		public function show($id)
-		{
-				//
+		public function show($id){
+			$user = Auth::user();
+			$subject = Subject::find($id);
+			
+			return view('student.show-workshop',compact('user','subject'));
 		}
 
 		/**

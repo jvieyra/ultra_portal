@@ -18,6 +18,10 @@ class Subject extends Model {
 		return $this->belongsToMany('App\Day','day_subject','subject_id','day_id');
 	}
 
+	public function workshop(){
+  	return $this->belongsTo('App\Workshop');
+  }
+
 	/* relations methods*/
 
 

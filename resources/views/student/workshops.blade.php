@@ -43,19 +43,47 @@
 				
 				<!-- Product Row One -->
 				<div class="row">
+					@if($student->workshopEnrollment())
+					<!-- Workshop Enrollment -->
+       		<div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+						<div class="panel panel-default card-view pa-0">
+							<div class="panel-wrapper collapse in">
+								<div class="alert alert-success alert-dismissable">
+									<i class="zmdi zmdi-check pr-15 pull-left"></i>
+									<p class="pull-left">
+										Ya te encuentras inscrito a una clase de Workshop.
+										<a href="">Ver clase</a>
+									</p> 
+									<div class="clearfix"></div>
+								</div>
+							</div>	
+						</div>	
+					</div>
+					<!-- ./ Workshop Enrollment  -->	
+					@else
 
-					<div class="alert alert-danger alert-dismissable alert-style-1">
-											<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-											<i class="zmdi zmdi-block"></i>{{ $errors->first('workshops') }}
-										</div>
-					@if($student->setWorkshops()->isNotEmpty())
+						@if($student->setWorkshops()->isNotEmpty())
 						
+							@if(session('fullError'))
+								<div class="alert alert-danger alert-dismissable alert-style-1">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+									<i class="zmdi zmdi-block"></i>{{ session()->get('fullError') }}
+								</div>
+							@endif
+
+							@if($errors->any())
+								<div class="alert alert-danger alert-dismissable alert-style-1">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+									<i class="zmdi zmdi-block"></i>{{ $errors->first('workshops') }}
+								</div>
+							@endif
+
 						<form action="{{ route('student.workshops.store') }}" method="POST">
 							{{ csrf_field() }}
 							<input type="hidden" class="form-control" name="subjects" value="{{ $student->setWorkshops()->count() }}">
 						@foreach($student->setWorkshops() as $workshop)
 							<!-- Workshop -->
-		       		<div class="col-lg-2 col-md-4 col-sm-4 col-xs-6">
+		       		<div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
 								<div class="panel panel-default card-view pa-0">
 									<div class="panel-wrapper collapse in">
 										<div class="panel-body pa-0">
@@ -102,7 +130,10 @@
 								<div class="alert alert-warning alert-dismissable">
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 										<i class="zmdi zmdi-alert-circle-o pr-15 pull-left"></i>
-										<p class="pull-left"> No hay clases disponibles con cupo para tu plan de estudios.</p>
+										<p class="pull-left">No hay clases disponibles con cupo para tu plan de estudios.</p>
+										<p class="pull-left">
+											 Dirígete al departamento de Afterschool para realizar tu inscripción.
+										</p>
 									<div class="clearfix"></div>
 								</div>
 							</div>	
@@ -110,26 +141,6 @@
 					</div>
 					<!-- ./ no classes  -->	
 					@endif
-
-					@if($student->workshopEnrollment())
-					<!-- Workshop Enrollment -->
-       		<div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
-						<div class="panel panel-default card-view pa-0">
-							<div class="panel-wrapper collapse in">
-								<div class="alert alert-success alert-dismissable">
-									<i class="zmdi zmdi-check pr-15 pull-left"></i>
-									<p class="pull-left">
-										Ya te encuentras inscrito a una clase de Workshop.
-										<a href="">Ver clase</a>
-									</p> 
-									<div class="clearfix"></div>
-								</div>
-							</div>	
-						</div>	
-					</div>
-					<!-- ./ Workshop Enrollment  -->	
-					@else
-					
 					@endif
 				</div>	
 				<!-- /Product Row Four -->

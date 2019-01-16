@@ -12,6 +12,12 @@ class Year extends Model {
 		return $year;
 	}
 
+
+	public function currentYear(){
+		$year = $this::where('current_year','=',1)->get();
+		return $year->first()->id;
+	}
+
 	public function isCurrentYear($year_id){
 		$currentYear = $this->getCurrentYear($year_id);
 		return ($currentYear->current_year == 1) ? true :false;

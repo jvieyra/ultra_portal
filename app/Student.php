@@ -5,6 +5,7 @@ namespace App;
 use App\Plan;
 use App\Workshop;
 use App\Year;
+use App\Subject;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -63,6 +64,28 @@ class Student extends Model {
 		}
 
 		return $workshops;
+	}
+
+
+	//selecciona una clase de workshop
+
+	public function selectWorkshop($subjects){
+		$collection = collect([]);
+
+		foreach($subjects as $subject){
+			$sub = Subject::find($subject);
+			if($sub->isAvailable()){
+				$collection->push($sub->id);
+			}
+		}
+
+		if($collection->isEmpty()){
+			return false;
+		}else{
+			return $subjectID = $collection->random();
+		}
+
+		
 	}
 
 }

@@ -24,9 +24,9 @@ class StudentWorkshopController extends Controller {
 		 */
 		public function index() {
 			$user = Auth::user();
-			$user = $user->students->first();
-			//dd($user->matricula);
-			$student = Student::findOrFail($user->matricula);
+			$userMat = $user->students->first();
+			//dd($userMat->code);
+			$student = Student::findOrFail($userMat->code);
 			return view('student.workshops',compact('user','student'));
 		}
 
@@ -35,9 +35,9 @@ class StudentWorkshopController extends Controller {
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function create()
-		{
-				//
+		
+		public function create() {
+			//
 		}
 
 		/**

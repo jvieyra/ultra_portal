@@ -30,7 +30,9 @@ class Student extends Model {
 
 	//valida si el alumno ya esta inscrito en algun workshop
 	public function workshopEnrollment(){
-		return $student = DB::table('workshop_enrollment')->where('matricula', $this->matricula)->first();
+		$student = DB::table('workshop_enrollment')->where('matricula', $this->code)->first();
+
+		return $student;
 	}
 
 	//devuelve los wrokshop que el alumno puede elegir

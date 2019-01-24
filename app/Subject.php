@@ -22,6 +22,10 @@ class Subject extends Model {
   	return $this->belongsTo('App\Workshop');
   }
 
+  public function user(){
+  	return $this->belongsTo('App\User');
+  }
+
 	/* relations methods*/
 
 

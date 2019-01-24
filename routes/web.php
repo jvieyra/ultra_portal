@@ -29,6 +29,9 @@ Route::group(['prefix' => 'staff'],function(){
 	Route::resource('buildings','BuildingController');
 	Route::resource('places','PlaceController');
 
+	/*afterschool admin*/
+	Route::resource('workshops','WorkshopController');
+
 });
 
 

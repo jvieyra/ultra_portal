@@ -9,7 +9,6 @@
 	</div>
 	<!--/Preloader-->
  	<div class="wrapper theme-1-active pimary-color-green">
-		
 		<!-- Top Menu Items -->
 		@include('student.nav')
 		<!-- /Top Menu Items -->
@@ -33,43 +32,46 @@
 					<!-- Breadcrumb -->
 					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 					  <ol class="breadcrumb">
-						<li><a href="{{ asset('home.student') }}">Inicio</a></li>
+						<li><a href="{{ route('home.student') }}">Inicio</a></li>
 						<li class="active"><span>Workshop</span></li>
 					  </ol>
 					</div>
 					<!-- /Breadcrumb -->
 				</div>
 				<!-- /Title -->
-				
-				<!-- Product Row One -->
+
+				<!-- workshop -->
 				<div class="row">
-							<!-- Workshop -->
-							Tu clase seleccionada
-		       		<div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
-								<div class="panel panel-default card-view pa-0">
-									<div class="panel-wrapper collapse in">
-										<div class="panel-body pa-0">
-											<article class="col-item">
-												<div class="photo">
-													<img src="{{ asset('img/workshop/'.$subject->workshop->picture) }}" class="img-responsive" alt="Product Image" /> 
-												</div>
-												<div class="info">
-													<h6>{{ $subject->id }} - {{ $subject->workshop->name }}</h6>
-													<div class="product-rating inline-block">
-														{{ $subject->subjectDays() }}
-													</div>
-													<div class="product-rating inline-block">
-														{{ $subject->start_time }} - {{ $subject->end_time }}
-													</div>
-												</div>
-											</article>
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-md-3 col-sm-3 col-xs-4">
+											<img src="{{ asset('img/workshop/'.$subject->workshop->picture) }}" class="img-fluid" width="90%"> 
 										</div>
-									</div>	
-								</div>	
+										<div class="col-md-9 col-sm-9 col-xs-9">
+											<div class="product-detail-wrap">
+												<h3 class="mb-20 weight-500">{{ $subject->id }} - {{ $subject->workshop->name }}</h3>
+												<div class="product-price head-font mb-30">¡Esta es tu nueva clase de workshop!</div>
+												<p class=" mb-10">
+													<span class="text-primary">Profesor:</span> {{ $subject->user->name}} {{ $subject->user->last_name}}
+												</p>
+												<p class=" mb-10">
+													<span class="text-primary">Dia:</span> {{ $subject->subjectDays() }}
+												</p>
+												<p class=" mb-10">
+													<span class="text-primary">Horario:</span> {{ $subject->start_time }} - {{ $subject->end_time }}
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-							<!-- ./ Workshop -->
-				</div>	
-				<!-- /Product Row Four -->
+						</div>
+					</div>
+				</div>
+				<!-- ./ workshop -->
 			</div>
 			
 			<!-- Footer -->

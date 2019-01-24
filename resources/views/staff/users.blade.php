@@ -251,9 +251,6 @@
 		<!-- JavaScript -->
 		
 		@push('scripts-footer')
-		
-		<!-- Slimscroll JavaScript -->
-		<script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
 	
 		<!-- Fancy Dropdown JS -->
 		<script src="{{ asset('dist/js/dropdown-bootstrap-extended.js') }}"></script>
@@ -263,8 +260,6 @@
 	
 		<!-- Switchery JavaScript -->
 		<script src="{{ asset('vendors/bower_components/switchery/dist/switchery.min.js') }}"></script>
-	
-		<!-- Init JavaScript -->
-		<script src="{{ asset('dist/js/init.js') }}"></script>
+
 		@endpush
 	@endsection

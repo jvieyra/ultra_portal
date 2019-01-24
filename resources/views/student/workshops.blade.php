@@ -15,7 +15,7 @@
 		<!-- /Top Menu Items -->
 		
 		<!-- Left Sidebar Menu -->
-		@include('student.nav-left')
+		@include('student.nav-left',array('some'=>'data'))
 		<!-- /Left Sidebar Menu -->
 		
 		<!-- Right Sidebar Backdrop -->
@@ -33,7 +33,7 @@
 					<!-- Breadcrumb -->
 					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 					  <ol class="breadcrumb">
-						<li><a href="{{ asset('home.student') }}">Inicio</a></li>
+						<li><a href="{{ route('home.student') }}">Inicio</a></li>
 						<li class="active"><span>Workshop</span></li>
 					  </ol>
 					</div>
@@ -43,16 +43,18 @@
 				
 				<!-- Product Row One -->
 				<div class="row">
+
 					@if($student->workshopEnrollment())
+
 					<!-- Workshop Enrollment -->
-       		<div class="col-lg-6 col-md-4 col-sm-4 col-xs-6">
+       		<div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
 						<div class="panel panel-default card-view pa-0">
 							<div class="panel-wrapper collapse in">
 								<div class="alert alert-success alert-dismissable">
 									<i class="zmdi zmdi-check pr-15 pull-left"></i>
 									<p class="pull-left">
 										Ya te encuentras inscrito a una clase de Workshop.
-										<a href="">Ver clase</a>
+										<a href="{{ route('student.workshops.show',$student->workshopEnrollment()->subject_id) }}">Ver clase</a>
 									</p> 
 									<div class="clearfix"></div>
 								</div>
@@ -61,9 +63,7 @@
 					</div>
 					<!-- ./ Workshop Enrollment  -->	
 					@else
-
 						@if($student->setWorkshops()->isNotEmpty())
-						
 							@if(session('fullError'))
 								<div class="alert alert-danger alert-dismissable alert-style-1">
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

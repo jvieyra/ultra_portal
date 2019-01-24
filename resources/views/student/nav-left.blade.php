@@ -11,12 +11,14 @@
 				<li>
 					<a href="{{ route('student.workshops.index') }}">Seleccionar clases</a>
 				</li>
-				<li>
-					<a href="index4.html">Tus clases</a>
+
+				@if($user->student->workshopEnrollment())
+					<li>
+					<a href="{{ route('student.workshops.show',$user->student->workshopEnrollment()->subject_id ) }}">Tu clase</a>
 				</li>
-				<li>
-					<a href="index4.html">Oferta academica</a>
-				</li>
+				@endif
+				
+
 			</ul>
 		</li>
 		<li><hr class="light-grey-hr mb-10"/></li>

@@ -19,7 +19,7 @@
 								<div class="col-sm-12 col-xs-12">
 									<div class="mb-30">
 										<img class="img-fluid " width="340" height="90" src="{{ asset('/img/login/logoitj_login.svg') }}" alt="">
-										<h6 class="text-center nonecase-font text-white">Acceso a Personal </h6>
+										<h6 class="text-center nonecase-font text-white">Bienvenido </h6>
 									</div>
 									<div class="form-wrap">
 										<!-- form -->
@@ -45,13 +45,14 @@
                             </span>
                           @endif
 												</div>
+												<!--
 													<div class="form-group">
 														<div class="checkbox checkbox-primary pr-10 pull-left">
 															<input id="checkbox_2" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} >
 															<label class="text-white" for="checkbox_2"> Recuerdame</label>
 														</div>
 														<div class="clearfix"></div>
-													</div>
+													</div>-->
 													<div class="form-group text-center">
 														<button type="submit" class="btn btn-info btn-success btn-rounded">Ingresar </button>
 													</div>

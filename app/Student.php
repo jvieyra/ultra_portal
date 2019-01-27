@@ -18,6 +18,7 @@ class Student extends Model {
 	protected $fillable = [
 		'homeroom',
 		'matricula',
+		'code',
 		'group',
 		'grade'
 	];
@@ -28,6 +29,10 @@ class Student extends Model {
 									->withTimestamps();
 	}
 
+	public function plan(){
+		return $this->belongsTo('');
+	}
+
 	//valida si el alumno ya esta inscrito en algun workshop
 	public function workshopEnrollment(){
 		$student = DB::table('workshop_enrollment')->where('matricula', $this->code)->first();
@@ -35,23 +40,44 @@ class Student extends Model {
 		return $student;
 	}
 
+	public function findStudentPlan(){
+		$studentPlan = DB::table('plan_student')->where('matricula', $this->code)->first();
+		//dd($studentPlan->plan_id);
+		//dd($studentPlan);
+		$plan = Plan::find($studentPlan->plan_id);
+		return $plan->id;
+	}
+
 	//devuelve los wrokshop que el alumno puede elegir
 	public function setWorkshops(){
-		$studentPlan = $this->plans->first()->id;
+
+		//$studentPlan = $this->plans->first()->id;
+		//dd($this->code);
+		$studentPlan = DB::table('plan_student')->where('matricula', $this->code)->first();
+		//dd($studentPlan->plan_id);
 		//dd($studentPlan);
-		$plan = Plan::find($studentPlan);
+		$plan = Plan::find($studentPlan->plan_id);
+		//dd($plan->id);
+
 		$year = new Year();
 		//dd($plan->subjects);
 		$workshops = collect();
 
 		//regresa los planes de estudio del alumno
-		
+		//dd($plan->subjects);
 		//foreach
 		foreach($plan->subjects as $subject){
+
+
 			$workshop = Workshop::find($subject->workshop_id);
+			$sub = Subject::find($subject->id);
+
 			$yearSubject = $subject->year_id;
+
 			//si esta disponible y es del ciclo actual agregala
-			if($subject->isAvailable() && $year->isCurrentYear($subject->year_id)){
+
+			//dd($sub->getQuota());
+			if($sub->isAvailable($plan->id) && $year->isCurrentYear($subject->year_id)){
 				$workshops->push([
 					'id'=> $subject->id,
 					'name'=> $workshop->name,
@@ -64,19 +90,19 @@ class Student extends Model {
 			}
 
 		}
-
+		
 		return $workshops;
 	}
 
 
 	//selecciona una clase de workshop
 
-	public function selectWorkshop($subjects){
+	public function selectWorkshop($subjects,$planID){
 		$collection = collect([]);
 
 		foreach($subjects as $subject){
 			$sub = Subject::find($subject);
-			if($sub->isAvailable()){
+			if($sub->isAvailable($planID)){
 				$collection->push($sub->id);
 			}
 		}

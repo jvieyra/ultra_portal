@@ -19,6 +19,8 @@ class TableWorkshopEnrollment extends Migration
             $table->foreign('matricula')->references('matricula')->on('students')->onDelete('cascade');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->integer('plan_id')->unsigned();
+            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
             $table->integer('year_id')->unsigned();
             $table->foreign('year_id')->references('id')->on('years')->onDelete('cascade');
             $table->timestamps();

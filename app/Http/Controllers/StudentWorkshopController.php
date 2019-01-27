@@ -27,6 +27,7 @@ class StudentWorkshopController extends Controller {
 			$userMat = $user->students->first();
 			//dd($userMat->code);
 			$student = Student::findOrFail($userMat->code);
+			//dd($student);
 			return view('student.workshops',compact('user','student'));
 		}
 
@@ -67,12 +68,13 @@ class StudentWorkshopController extends Controller {
       if($saveTemp){
       	//save subject workshop winner!
       	$student = Student::find($user->student->code);
-      	$selectWorkshop = $student->selectWorkshop($subjects['workshops']);
+      	$selectWorkshop = $student->selectWorkshop($subjects['workshops'],$student->findStudentPlan());
 
       	if($selectWorkshop){
       		$inscription = new WorkshopEnrollment;
       		$inscription->matricula = $student->code;
       		$inscription->subject_id = $selectWorkshop;
+      		$inscription->plan_id = $student->findStudentPlan();
       		$inscription->year_id = $currentYear;
       		$inscription->save();
       		//return vista con el taller elegido.

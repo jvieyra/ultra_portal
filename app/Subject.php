@@ -22,6 +22,8 @@ class Subject extends Model {
   	return $this->belongsTo('App\Workshop');
   }
 
+
+
   public function user(){
   	return $this->belongsTo('App\User');
   }
@@ -32,26 +34,35 @@ class Subject extends Model {
 	/* logic methods */
 
 	//cuenta cuantos alumnos estan ya inscritos a la clase
-	public function countSubjEnroll(){
+	public function countSubjEnroll($planID){
 		return  $countSubj = DB::table('workshop_enrollment')
 																	->where('subject_id', $this->id)
+																	->where('plan_id', $planID)
 																	->get()
 																	->count();
 	}
 
 	//regresa el cupo por subject creado
-	public function getQuota(){
-		return $quota = DB::table('plan_subject')
+	public function getQuota($planID){
+		//dd($this->id);
+		/*return $quota = DB::table('plan_subject')
 															->where('subject_id',$this->id)
+															->select('quota')
+															->get()->toArray();*/
+
+															return $quota = DB::table('plan_subject')
+															->where('subject_id',$this->id)
+															->where('plan_id',$planID)
 															->select('quota')
 															->get()->toArray();
 	}
 
 	//valida si hay cupo disponible
-	public function isAvailable(){
-		$quota = $this->getQuota();
+	public function isAvailable($planID){
+		$quota = $this->getQuota($planID);
 		$quota = $quota[0]->quota;
-		if($this->countSubjEnroll() >= $quota){
+		//dd($this->countSubjEnroll());
+		if($this->countSubjEnroll($planID) >= $quota){
 			return false;
 		}
 

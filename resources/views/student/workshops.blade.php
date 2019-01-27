@@ -35,6 +35,7 @@
 					  <ol class="breadcrumb">
 						<li><a href="{{ route('home.student') }}">Inicio</a></li>
 						<li class="active"><span>Workshop</span></li>
+						<li ><span>{{ $user->name }} {{ $student->homeroom }}</span></li>
 					  </ol>
 					</div>
 					<!-- /Breadcrumb -->

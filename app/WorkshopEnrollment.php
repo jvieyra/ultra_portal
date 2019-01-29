@@ -11,6 +11,11 @@ class WorkshopEnrollment extends Model {
 	protected $table = "workshop_enrollment";
 
 
+	public function student(){
+		return $this->belongsTo('App\Student');
+	}
+
+	
 
 
 }

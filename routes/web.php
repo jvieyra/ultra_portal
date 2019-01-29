@@ -22,6 +22,8 @@ Route::group(['prefix' => 'staff'],function(){
 	Route::get('campus','UserController@campus')->name('campus.staff');
 
 	Route::resource('users','UserController');
+	Route::post('createStudents','UserController@storeStudents')->name('create-students');
+
 	Route::resource('sections','SectionController');
 	Route::get('/dtsec','SectionController@getSections')->name('datatable.sections');
 

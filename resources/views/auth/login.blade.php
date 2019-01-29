@@ -36,7 +36,7 @@
 											</div>
 												<div class="form-group">
 													<label class="pull-left control-label mb-10 text-white" for="exampleInputpwd_2">Contraseña </label>
-													<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="forgot-password.html">olvidaste tu contraseña ?</a>
+													<!--<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="forgot-password.html">olvidaste tu contraseña ?</a>-->
 													<div class="clearfix"></div>
 													<input type="password" class="form-control" required="" id="exampleInputpwd_2" placeholder="Ingresa tu password" name="password">
 													@if($errors->has('password'))

@@ -16,6 +16,7 @@ class Student extends Model {
 	protected $primaryKey = 'matricula';
 
 	protected $fillable = [
+		'user_id',
 		'homeroom',
 		'matricula',
 		'code',

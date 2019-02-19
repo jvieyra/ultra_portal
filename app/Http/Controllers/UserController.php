@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Validator;
+use App\Role;
 use App\Section;
 use App\Student;
 use App\Building;
+use App\Employee;
 use App\Department;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateUserRequest;
 use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -23,7 +27,8 @@ class UserController extends Controller
 		 */
 		public function index(){
 			$departments = Department::all();
-			return view('staff.users',compact('departments'));
+			$roles = Role::pluck('display_name','id');
+			return view('staff.users',compact('departments','roles'));
 		}
 
 		//show menu campus
@@ -49,8 +54,31 @@ class UserController extends Controller
 		 * @param  \Illuminate\Http\Request  $request
 		 * @return \Illuminate\Http\Response
 		 */
-		public function store(Request $request){
+		public function store(CreateUserRequest $request){
 
+			$user = new User();
+			$user->name = $request->name;
+			$user->email = $request->email;
+			$user->last_name = $request->last_name;
+			$user->second_last_name = $request->second_last_name;
+			$user->nationality = $request->nationality;
+			$user->birthday = $request->birthday;
+			$user->gender = $request->gender;
+			$gender = ($request->gender == 'F') ? "woman.png" : "man.png";
+			$user->password = bcrypt($request->password);
+			$user->department_id = $request->department_id;
+			$user->image = $gender;
+
+			$user->save();
+
+			$employee = new Employee();
+			$employee->user_id = $user->id;
+			$employee->specific_position = $request->specific_position;
+			$employee->save();
+
+			$user->roles()->attach($request->roles);
+
+			return back()->with('user-save',1);
 			
 		}
 
@@ -83,15 +111,16 @@ class UserController extends Controller
 			$user->nationality = $request->nationality;
 			$user->birthday = $request->birthday;
 			$user->gender = $request->gender;
+			$gender = ($request->gender == 'F') ? "girl.png" : "boy.png";
+			$user->image = $gender;
 			$user->password = bcrypt($request->password);
 			$user->department_id = $request->department_id;
+			$user->image = $gender;
 			$user->save();
-
-			//$allStudent = DB::table('students');
 
 			$allStudent = DB::table('students')->orderByRaw('id DESC')
                 				->get()->first();
-			//dd($allStudent->id);
+			
 			$student = new Student;
 			$student->id = $allStudent->id + 1;
 			$student->user_id = $user->id;
@@ -102,10 +131,12 @@ class UserController extends Controller
 			$student->group = $request->group;
 
 			$student->save();
-			//dd($user->id);
+			
 			return back()->with('student-save',1);
 			
 		}
+
+
 
 		/**password
 		 * Display the specified resource.

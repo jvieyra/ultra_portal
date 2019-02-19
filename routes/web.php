@@ -26,10 +26,22 @@ Route::group(['prefix' => 'staff'],function(){
 
 	Route::resource('sections','SectionController');
 	Route::get('/dtsec','SectionController@getSections')->name('datatable.sections');
+	Route::get('get-sections','SectionController@allSections');
 
 	Route::resource('departments','DepartmentController');
+	Route::get('/dtdep','DepartmentController@getDepartments')->name('datatable.departments');
+
+
 	Route::resource('buildings','BuildingController');
 	Route::resource('places','PlaceController');
+
+	/*Tickets*/
+	Route::resource('tickets','TicketController');
+	Route::get('charts-tickets','TicketController@charts')->name('tickets.charts');
+
+	//students
+	Route::get('crear-plan','StudentController@createPlanStudent')->name('crear-plan');
+	Route::post('planStudent','StudentController@planStudent')->name('plan-student.create');
 
 	/*afterschool admin*/
 	Route::resource('workshops','WorkshopController');

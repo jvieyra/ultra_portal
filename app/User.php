@@ -9,7 +9,7 @@ class User extends Authenticatable {
 		use Notifiable;
 
 		protected $fillable = [
-				'name', 'email', 'password','department_id'
+				'name', 'email', 'password','department_id','image'
 		];
 
 		protected $hidden = [
@@ -30,6 +30,20 @@ class User extends Authenticatable {
 
 		public function roles(){
 			return $this->belongsToMany('App\Role');
+		}
+
+		public function hasRoles(array $roles){
+
+			foreach($roles as $role){
+				foreach($this->roles as $userRole){
+					if($userRole->name === $role){
+						return true;
+					}
+				}
+			}
+
+			return false;
+
 		}
 
 		public function department(){

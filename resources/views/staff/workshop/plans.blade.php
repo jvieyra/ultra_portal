@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('meta-title','Configuración Campus | Portal ITJ Vallereal')
+@section('meta-title','Workshops Planes | Portal ITJ Vallereal')
 
 @section('content')
 
@@ -9,7 +9,6 @@
 	<div class="la-anim-1"></div>
 </div>
 <!--/Preloader-->
-
 <div class="wrapper theme-1-active pimary-color-green">
 		
 	<!-- Top Menu Items -->
@@ -34,7 +33,7 @@
 			<!-- Title -->
 			<div class="row heading-bg">
 				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				  <h5 class="txt-dark">Campus</h5>
+				  <h5 class="txt-dark">Workshops Planes </h5>
 				</div>
 				<!-- Breadcrumb -->
 				<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
@@ -59,31 +58,21 @@
 							<div class="panel-body">
 								<div class="tab-struct custom-tab-1 product-desc-tab">
 									<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_7">
-										<li class="{{ (session()->has('department-active') or session()->has('building-active') or session()->has('place-active'))  ? '' : 'active' }}" role="presentation">
-											<a aria-expanded="true" data-toggle="tab" role="tab" id="descri_tab" href="#sections">	
-												<span>Secciones </span>
+										<li class="" role="presentation">
+											<a aria-expanded="true" data-toggle="tab" role="tab" id="descri_tab" href="#studyplans">	
+												<span>Planes de estudio </span>
 											</a>
 										</li>
-										<li role="presentation" class="{{ session()->has('department-active') ? 'active':''}}">
-											<a data-toggle="tab" id="adi_info_tab" role="tab" href="#departments" aria-expanded="false">
-												<span>Departamentos </span>
-											</a>
-										</li>
-										<li role="presentation" class="{{ session()->has('building-active') ? 'active':''}}">
-											<a data-toggle="tab" id="review_tab" role="tab" href="#buildings" aria-expanded="false">
-												<span>Edificios </span>
-											</a>
-										</li>
-										<li role="presentation" class="{{ session()->has('place-active') ? 'active':''}}">
-											<a data-toggle="tab" id="review_tab" role="tab" href="#places" aria-expanded="false">
-												<span>Ubicaciones </span>
+										<li role="presentation" class="active">
+											<a data-toggle="tab" id="adi_info_tab" role="tab" href="#planstudent" aria-expanded="false">
+												<span>Plan Alumno </span>
 											</a>
 										</li>
 									</ul>
 										<!-- Content Tabs -->
 									<div class="tab-content" id="myTabContent_7">
-										<div id="sections" class="tab-pane fade pt-0 
-										{{ (session()->has('department-active') or session()->has('building-active') or session()->has('place-active')) ? '' : 'active in' }}" role="tabpanel">
+
+										<div id="studyplans" class="tab-pane fade pt-0" role="tabpanel">
 											<!-- content sections -->
 											<!-- Row -->
 											<div class="row">
@@ -128,8 +117,6 @@
 												</div>
 											</div>
 											<!-- /Row -->
-
-											<!-- Row -->
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="panel panel-default card-view">
@@ -148,54 +135,50 @@
 													</div>
 												</div>
 											</div>
-											<!-- ../ Row  -->
-										<!-- /content sections -->
+										<!-- /content study plans -->
 										</div>
 
-										<div id="departments" class="tab-pane pt-0 {{ session()->has('department-active') ? 'active in':''}} fade" role="tabpanel">
-											<!-- content departments -->
+										<div id="planstudent" class="tab-pane pt-0 active in fade" role="tabpanel">
+											<!-- content Plan Student -->
 											<!-- Row -->
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="panel panel-default card-view">
 														<div class="panel-wrapper collapse in">
 															<div class="panel-body">
-																@if(session()->has('department-save') == 1)
+																@if(session()->has('planstudent-save') == 1)
 																<div class="alert alert-success alert-dismissable">
 																	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 																	<i class="zmdi zmdi-check pr-15 pull-left"></i>
-																	<p class="pull-left">El departamento fue agregado correctamente.</p> 
+																	<p class="pull-left">El alumno fue asignado al plan de estudios correctamente</p> 
 																	<div class="clearfix"></div>
 																</div>
 																@endif
 																<div class="form-wrap">
-																	<form action="{{ route('departments.store') }}" method="POST">
-																		<h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-edit mr-10"></i>Crear Departamentos</h6>
-																		<hr class="light-grey-hr">
+																	<form action="{{ route('plan-student.create') }}" method="POST">
 																		{{ csrf_field() }}
-																		<div class="col-md-6 col-sm-12 col-xs-12 form-group {{ $errors->has('name_d') ? ' has-error has-danger' : '' }}">
-																			<input type="text" name="name_d"  value="{{ old('name_d') }}" placeholder="Nombre del departamento" class="form-control">
-																			@if ($errors->has('name_d'))
+																		<div class="col-md-6 col-sm-12 col-xs-12 form-group {{ $errors->has('matricula') ? ' has-error has-danger' : '' }}">
+																			
+																			<input type="text" name="matricula"  value="{{ old('matricula') }}" placeholder="19-9999-1" class="form-control">
+																			@if ($errors->has('matricula'))
 																			<div class="help-block with-errors">
 																				<ul class="list-unstyled">
-																					<li>Ingresa un nombre para el departamento</li>
+																					<li>Ingresa la matricula del alumno.</li>
 																				</ul>
 																			</div>
 																			@endif
 																		</div>
-																		<div class="col-md-6 col-sm-12 col-xs-12 form-group {{ $errors->has('section') ? ' has-error has-danger' : '' }}">
-																			<select class="form-control" data-placeholder="Elige una sección" name="section" tabindex="1">
-																				<option value="">Seccion del departamento</option>
-																				@foreach($sections as $section => $value)
+																		<div class="col-md-6 col-sm-12 col-xs-12 form-group {{ $errors->has('plan_id') ? ' has-error has-danger' : '' }}">
+																			<select class="form-control" data-placeholder="Elige una sección" name="plan_id" tabindex="1">
+																				<option value="">Selecciona un plan</option>
+																				@foreach($plans as $plan => $value)
 																				<option value="{{ $value->id }}">{{ $value->name }}</option>
 																				@endforeach
 																			</select>
-																			<span class="help-block"> Selecciona una sección</span>
-																
-																			@if ($errors->has('department'))
+																			@if ($errors->has('plan_id'))
 																			<div class="help-block with-errors">
 																				<ul class="list-unstyled">
-																					<li>Debes de seleccionar una sección </li>
+																					<li>Ingresa el plan de estudio para workshop.</li>
 																				</ul>
 																			</div>
 																			@endif
@@ -214,32 +197,10 @@
 												</div>
 											</div>
 											<!-- /Row -->
-
-											<!-- Row -->
-											<div class="row">
-												<div class="col-sm-12">
-													<div class="panel panel-default card-view">
-														<div class="panel-wrapper collapse in">
-															<div class="panel-body">
-																<div class="form-wrap">
-																	<h6 class="txt-dark capitalize-font">
-																		<i class="zmdi zmdi-assignment mr-10"></i>Administrar departamentos</h6>
-																	<hr class="light-grey-hr">
-																		<a href="{{ route('departments.index') }}" class="btn btn-primary btn-icon left-icon mr-10 pull-left">
-																		 <i class="zmdi zmdi-eye"></i> <span>Ver departamentos</span>
-																		</a>
-																		<div class="clearfix"></div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- ../ Row  -->
 											<!-- /content departments -->
 										</div>
 
-										<div id="buildings" class="tab-pane pt-0 {{ session()->has('building-active') ? 'active in':''}} fade" role="tabpanel">
+										<div id="buildings" class="tab-pane pt-0 fade" role="tabpanel">
 											<!-- content buildings -->
 											<!-- Row -->
 											<div class="row">
@@ -257,8 +218,6 @@
 																@endif
 																<div class="form-wrap">
 																	<form action="{{ route('buildings.store') }}" method="POST">
-																		<h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-edit mr-10"></i>Crear Edificios</h6>
-																		<hr class="light-grey-hr">
 																		{{ csrf_field() }}
 																		<div class="col-md-6 col-sm-12 col-xs-12 form-group {{ $errors->has('name_b') ? ' has-error has-danger' : '' }}">
 																			<input type="text" name="name_b"  value="{{ old('name_b') }}" placeholder="Nombre del edificio" class="form-control">
@@ -284,31 +243,6 @@
 												</div>
 											</div>
 											<!-- /Row -->
-
-
-											<!-- Row -->
-											<div class="row">
-												<div class="col-sm-12">
-													<div class="panel panel-default card-view">
-														<div class="panel-wrapper collapse in">
-															<div class="panel-body">
-																<div class="form-wrap">
-																	<h6 class="txt-dark capitalize-font">
-																		<i class="zmdi zmdi-assignment mr-10"></i>Administrar Edificios</h6>
-																	<hr class="light-grey-hr">
-																		<a href="{{ route('buildings.index') }}" class="btn btn-primary btn-icon left-icon mr-10 pull-left">
-																		 <i class="zmdi zmdi-eye"></i> <span>Ver Edificios</span>
-																		</a>
-																		<div class="clearfix"></div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- ../ Row  -->
-
-
 											<!-- /content buildings -->
 										</div>
 
@@ -341,23 +275,7 @@
 																			</div>
 																			@endif
 																		</div>
-																		<div class="col-md-6 col-sm-12 col-xs-12 form-group {{ $errors->has('building') ? ' has-error has-danger' : '' }}">
-																			<select class="form-control" data-placeholder="Elige una sección" name="building" tabindex="1">
-																				<option value="">Edificio de la ubicación</option>
-																				@foreach($buildings as $building => $value)
-																				<option value="{{ $value->id }}">{{ $value->name }}</option>
-																				@endforeach
-																			</select>
-																			<span class="help-block"> Selecciona un edificio para la ubicación en el campus.</span>
-																
-																			@if ($errors->has('building'))
-																			<div class="help-block with-errors">
-																				<ul class="list-unstyled">
-																					<li>Debes de seleccionar un edificio para la ubicación. </li>
-																				</ul>
-																			</div>
-																			@endif
-																		</div>
+																		
 																		<div class="form-actions">
 																			<button type="submit" class="btn btn-success btn-icon left-icon mr-10 pull-left">
 																			 <i class="fa fa-check"></i> <span>Guardar</span></button>

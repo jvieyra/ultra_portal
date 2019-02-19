@@ -223,22 +223,22 @@ $(function() {
 		Morris.Bar({
 			element: 'morris_bar_chart',
 			data: [{
-				device: 'iPhone',
+				device: 'Elementary',
 				geekbench: 136
 			}, {
-				device: 'iPhone 3G',
+				device: 'Middle School',
 				geekbench: 137
 			}, {
-				device: 'iPhone 3GS',
+				device: 'High School',
 				geekbench: 275
 			}, {
-				device: 'iPhone 4',
+				device: 'Caja',
 				geekbench: 380
 			}, {
-				device: 'iPhone 4S',
+				device: 'RP',
 				geekbench: 655
 			}, {
-				device: 'iPhone 5',
+				device: 'Control Escolar',
 				geekbench: 1571
 			}],
 			xkey: 'device',

@@ -59,12 +59,12 @@
 								<div class="panel-body">
 									<div class="tab-struct custom-tab-1 product-desc-tab">
 										<ul role="tablist" class="nav nav-tabs nav-tabs-responsive" id="myTabs_7">
-											<li  role="presentation">
+											<li class="active" role="presentation">
 												<a aria-expanded="true" data-toggle="tab" role="tab" id="descri_tab" href="#staff">	
-													<span>Staff</span>
+													<span>Usuarios</span>
 												</a>
 											</li>
-											<li class="active" role="presentation" class="next">
+											<li  role="presentation" class="next">
 												<a data-toggle="tab" id="adi_info_tab" role="tab" href="#students" aria-expanded="false">
 													<span>Alumnos</span>
 												</a>
@@ -77,7 +77,7 @@
 										</ul>
 										<!-- Content Tabs -->
 										<div class="tab-content" id="myTabContent_7">
-											<div id="staff" class="tab-pane fade pt-0 " role="tabpanel">
+											<div id="staff" class="tab-pane fade pt-0 active in" role="tabpanel">
 												<!-- content staff -->
 												<!-- Row -->
 												<div class="row">
@@ -86,22 +86,45 @@
 															<div class="panel-wrapper collapse in">
 																<div class="panel-body">
 																	<div class="form-wrap">
-																		<form action="#">
+																		@if(session()->has('user-save') == 1)
+																			<div class="alert alert-success alert-dismissable">
+																				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+																				<i class="zmdi zmdi-check pr-15 pull-left"></i>
+																				<p class="pull-left">El usuario fue agregado correctamente.</p> 
+																				<div class="clearfix"></div>
+																			</div>
+																		@endif
+																		<form action="{{ route('users.store') }}" method="POST">
+																			{{ csrf_field() }}
 																			<h6 class="txt-dark capitalize-font">
-																				<i class="zmdi zmdi-account-add mr-10"></i>Crear Usuarios Staff</h6>
+																				<i class="zmdi zmdi-account-add mr-10"></i>Crear Usuarios</h6>
 																			<hr class="light-grey-hr"/>
 																			<div class="row">
 																				<div class="col-md-6">
-																					<div class="form-group">
+																					<div class="form-group {{ $errors->has('name') ? ' has-error has-danger' : '' }}">
 																						<label class="control-label mb-10">Nombre(s)</label>
-																						<input type="text" id="firstName" class="form-control" name="name" placeholder="Nombre del usuario">
+																						<input type="text" class="form-control" name="name"  value="{{ old('name') }}" placeholder="Nombre del usuario">
+																						@if ($errors->has('name'))
+																							<div class="help-block with-errors">
+																								<ul class="list-unstyled">
+																									<li>Ingresa un nombre.</li>
+																								</ul>
+																							</div>
+																						@endif
 																					</div>
 																				</div>
 																			<!--/span-->
-																			<div class="col-md-6">
+																			<div class="col-md-6 {{ $errors->has('last_name') ? ' has-error has-danger' : '' }}">
 																				<div class="form-group">
 																					<label class="control-label mb-10">Apellido Paterno</label>
-																					<input type="text" id="lastName" class="form-control" name="last_name" placeholder="Apellido paterno">
+																					<input type="text" class="form-control" name="last_name"  value="{{ old('last_name') }}" placeholder="Apellido paterno">
+																					@if ($errors->has('last_name'))
+																							<div class="help-block with-errors">
+																								<ul class="list-unstyled">
+																									<li>Ingresa el apellido paterno.</li>
+																								</ul>
+																							</div>
+																						@endif
 																				</div>
 																			</div>
 																			<!--/span-->
@@ -109,15 +132,22 @@
 																	<!-- Row -->
 																	<div class="row">
 																		<div class="col-md-6">
-																				<div class="form-group">
+																				<div class="form-group ">
 																					<label class="control-label mb-10">Apellido Materno</label>
-																					<input type="text" id="lastName" class="form-control" name="second_last_name" placeholder="Campo opcional">
+																					<input type="text"class="form-control" name="second_last_name" value="{{ old('second_last_name') }}" placeholder="Campo opcional">
 																				</div>
 																			</div>
 																		<div class="col-md-6">
-																			<div class="form-group">
+																			<div class="form-group {{ $errors->has('birthday') ? ' has-error has-danger' : '' }}">
 																				<label class="control-label mb-10">Fecha de nacimiento</label>
-																				<input type="text" placeholder="Coloca una fecha valida" data-mask="99/99/9999" class="form-control">
+																				<input type="text" name="birthday" placeholder="Coloca una fecha valida" value="{{ old('birthday') }}" class="form-control">
+																				@if ($errors->has('birthday'))
+																							<div class="help-block with-errors">
+																								<ul class="list-unstyled">
+																									<li>Ingresa una fecha de nacimiento valida.</li>
+																								</ul>
+																							</div>
+																					@endif
 																			</div>
 																		</div>
 																	</div>
@@ -141,10 +171,17 @@
 																</div>
 															</div>
 															<!--/span-->
-															<div class="col-md-6">
+															<div class="col-md-6 {{ $errors->has('nationality') ? ' has-error has-danger' : '' }}">
 																<div class="form-group">
 																	<label class="control-label mb-10">Nacionalidad</label>
-																		<input type="text" class="form-control" id="exampleInputuname_1" placeholder="Mexicana">
+																		<input type="text" class="form-control" name="nationality" value="{{ old('nationality') }}" placeholder="Mexicana">
+																		@if ($errors->has('nationality'))
+																				<div class="help-block with-errors">
+																					<ul class="list-unstyled">
+																						<li>Ingresa una nacionalidad.</li>
+																					</ul>
+																				</div>
+																		@endif
 																</div>
 															</div>
 															<!--/span-->
@@ -152,41 +189,92 @@
 														<!--/row-->
 														<div class="row">
 															<div class="col-md-6">
-																<div class="form-group">
-																	<label class="control-label mb-10"> Puesto</label>
-																	<input type="text" class="form-control" placeholder="Puesto que desempeña">
+																<div class="form-group {{ $errors->has('specific_position') ? ' has-error has-danger' : '' }}">
+																	<label class="control-label mb-10"> Posición específica</label>
+																	<input type="text" class="form-control" name="specific_position"  value="{{ old('specific_position') }}" placeholder="Puesto que desempeña">
+																	@if ($errors->has('specific_position'))
+																				<div class="help-block with-errors">
+																					<ul class="list-unstyled">
+																						<li>Cual es el puesto que desempeña en la empresa.</li>
+																					</ul>
+																				</div>
+																		@endif
 																</div>
 															</div>
 															<div class="col-md-6">
-																<div class="form-group">
+																<div class="form-group {{ $errors->has('department_id') ? ' has-error has-danger' : '' }}">
 																	<label class="control-label mb-10"> Departamento </label>
-																	<select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-																			<option value="Category 1"></option>
-																			<option value="Category 2">Category 2</option>
-																			<option value="Category 3">Category 5</option>
-																			<option value="Category 4">Category 4</option>
-																		</select>
+																	<select class="form-control" name="department_id" data-placeholder="Elige un departamento" tabindex="1">
+																		<option value=""></option>
+																			@foreach($departments as $department)
+																				<option value="{{ $department->id }}">{{ $department->name }}</option>
+																			@endforeach
+																	</select>
+																	@if ($errors->has('department_id'))
+																			<div class="help-block with-errors">
+																				<ul class="list-unstyled">
+																					<li>Ingresa el departamento del usuario.</li>
+																				</ul>
+																			</div>
+																		@endif
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group mb-30 {{ $errors->has('roles') ? ' has-error has-danger' : '' }}">
+																	<label class="control-label mb-10 text-left">Roles del usuario</label>
+																	@foreach($roles as $id => $name)
+																		<div class="checkbox checkbox-success">
+																			<input id="checkbox{{ $id }}" type="checkbox" name="roles[]" value="{{ $id }}">
+																			<label for="checkbox{{ $id }}">
+																				{{ $name }}
+																			</label>
+																		</div>	
+																	@endforeach
+																	@if ($errors->has('roles'))
+																				<div class="help-block with-errors">
+																					<ul class="list-unstyled">
+																						<li>Selecciona al menos un rol.</li>
+																					</ul>
+																				</div>
+																		@endif
 																</div>
 															</div>
 														</div>
 														<!-- row -->
 															<div class="row">
-																<div class="col-md-6">
+																<div class="col-md-6 {{ $errors->has('email') ? ' has-error has-danger' : '' }}">
 																	<div class="form-group mb-30">
 																		<label class="control-label mb-10 text-left">Correo electrónico </label>
 																		<div class="input-group">
 																			<div class="input-group-addon"><i class="ti-email"></i></div>
-																			<input type="text" class="form-control" id="exampleInputuname_1" placeholder="Correo electrónico">
+																			<input type="text" class="form-control" name="email"  value="{{ old('email') }}" placeholder="Correo electrónico">
+																			@if ($errors->has('email'))
+																				<div class="help-block with-errors">
+																					<ul class="list-unstyled">
+																						<li>{!! $errors->first('email',':message') !!}</li>
+																					</ul>
+																				</div>
+																			@endif
 																		</div>
 																</div>
 															</div>
 															<!--/span-->
 															<div class="col-md-6">
-																<div class="form-group">
+																<div class="form-group {{ $errors->has('password') ? ' has-error has-danger' : '' }}">
 																	<label class="control-label mb-10">Contraseña</label>
 																	<div class="input-group">
 																		<div class="input-group-addon"><i class="ti-lock"></i></div>
-																		<input type="password" class="form-control" id="exampleInputuname_1" placeholder="contraseña segura">
+																		<input type="password" class="form-control" name="password" placeholder="contraseña segura">
+																		@if ($errors->has('password'))
+																				<div class="help-block with-errors">
+																					<ul class="list-unstyled">
+																						<li>Ingresa un password.</li>
+																					</ul>
+																				</div>
+																			@endif
 																	</div>
 																</div>
 															</div>
@@ -194,7 +282,9 @@
 														</div>
 														<!-- /row -->
 													<div class="form-actions">
-														<button type="submit" class="btn btn-success btn-icon left-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>Guardar</span></button>
+														<button type="submit" class="btn btn-success btn-icon left-icon mr-10 pull-left">
+														 <i class="fa fa-check"></i> <span>Guardar</span>
+														</button>
 														<button type="button" class="btn btn-warning pull-left">Cancelar</button>
 														<div class="clearfix"></div>
 													</div>
@@ -208,7 +298,7 @@
 					<!-- /Row -->
 					<!-- /content staff -->
 					</div>
-					<div id="students" class="tab-pane pt-0 fade active in" role="tabpanel">
+					<div id="students" class="tab-pane pt-0 fade " role="tabpanel">
 						<!-- content student -->
 						<!-- Row -->
 						<div class="row">

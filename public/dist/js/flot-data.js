@@ -159,22 +159,14 @@ $(function() {
 	/***Pie Chart***/
 	if( $('#flot_pie_chart').length > 0 ){
 		var pie_data = [{
-			label: "Series 0",
+			label: "Terminados",
 			data: 10,
 			color: "rgba(240,197,65,.6)",
 			
 		}, {
-			label: "Series 1",
+			label: "Pendientes",
 			data: 1,
 			color: "rgba(46,205,153,.6)",
-		}, {
-			label: "Series 2",
-			data: 3,
-			color: "rgba(78,157,230,.6)",
-		}, {
-			label: "Series 3",
-			data: 1,
-			color: "rgba(237,111,86,.6)",
 		}];
 
 		var pie_op = {
@@ -205,6 +197,79 @@ $(function() {
 			},
 		};
 		$.plot($("#flot_pie_chart"), pie_data, pie_op);
+	}
+
+
+		/***Pie Chart***/
+	if( $('#categories_tickets').length > 0 ){
+		var pie_data = [{
+			label: "Impresoras",
+			data: 8,
+			color: "rgba(255, 118, 117,1.0)",
+		},
+
+		{
+			label: "Reparacion Mantenimiento",
+			data: 1,
+			color: "rgba(46,205,153,.6)",
+		},
+		{
+			label: "Telefonia IP",
+			data: 2,
+			color: "rgba(48,134,153,.6)",
+		},
+		{
+			label: "Instalacion software",
+			data: 2,
+			color: "rgba(134,188,123,.6)",
+		},
+		{
+			label: "Servo escolar",
+			data: 3,
+			color: "rgba(9, 132, 227,1.0)",
+		},
+		{
+			label: "Equipo de Audio",
+			data: 2,
+			color: "rgba(225, 112, 85,1.0)",
+		},
+		{
+			label: "Smartboard",
+			data: 3,
+			color: "rgba(255, 234, 167,1.0)",
+		}
+
+
+		];
+
+		var pie_op = {
+			series: {
+				pie: {
+					innerRadius: 0.5,
+					show: true,
+					stroke: {
+						width: 0,
+					}
+				}
+			},
+			legend : {
+				backgroundColor: 'transparent',
+			},
+			grid: {
+				hoverable: true
+			},
+			color: null,
+			tooltip: true,
+			tooltipOpts: {
+				content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+				shifts: {
+					x: 20,
+					y: 0
+				},
+				defaultTheme: false
+			},
+		};
+		$.plot($("#categories_tickets"), pie_data, pie_op);
 	}
 
 	/***Filled Line Chart***/

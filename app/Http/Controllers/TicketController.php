@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
-use App\Department;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use App\Department;
 
-class DepartmentController extends Controller
+class TicketController extends Controller
 {
 		/**
 		 * Display a listing of the resource.
@@ -15,15 +13,7 @@ class DepartmentController extends Controller
 		 * @return \Illuminate\Http\Response
 		 */
 		public function index(){
-			return view('staff.departments');
-		}
-
-		public function getDepartments(){
-			/* Datatables  departments */
-			$departments = Department::select(['id','name']);
-
-			return Datatables::of($departments)->make(true);
-
+				return view('staff.tickets.index');
 		}
 
 		/**
@@ -31,9 +21,10 @@ class DepartmentController extends Controller
 		 *
 		 * @return \Illuminate\Http\Response
 		 */
-		public function create()
-		{
-				//
+		public function create(){
+
+			$departments =  Department::all();
+			return view('staff.tickets.create',compact('departments'));
 		}
 
 		/**
@@ -42,24 +33,9 @@ class DepartmentController extends Controller
 		 * @param  \Illuminate\Http\Request  $request
 		 * @return \Illuminate\Http\Response
 		 */
-		public function store(Request $request){
-			//dd($request->all());
-			$validator = Validator::make($request->all(),[
-				'name_d' => 'required',
-				'section' => 'required'
-			]);
-
-			if($validator->fails()) {
-      	return redirect()->back()->with('department-active',2)->withErrors($validator)->withInput();
-    	}
-
-    	$department = new Department();
-      $department->name = $request->name_d;
-      $department->save();
-      $department->sections()->attach($request->section);
-
-    	return back()->with(['department-save' => 1, 'department-active'=> 2]);
-
+		public function store(Request $request)
+		{
+				//
 		}
 
 		/**
@@ -105,5 +81,11 @@ class DepartmentController extends Controller
 		public function destroy($id)
 		{
 				//
+		}
+
+
+
+		public function charts(){
+			return  view('staff.admin.charts-tickets');
 		}
 }

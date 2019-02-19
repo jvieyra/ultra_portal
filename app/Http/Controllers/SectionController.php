@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Validator;
 use App\Section;
 use Illuminate\Http\Request;
@@ -20,16 +19,36 @@ class SectionController extends Controller
 			//return view('staff.sections',compact('sections'));
 			return view('staff.sections');
 
-			
 		}
 
 		public function getSections(){
 			/* Datatables */
 			$sections = Section::select(['id','name']);
-
 			return Datatables::of($sections)->make(true);
-
 		}
+
+
+		/*all sections axios Vue*/
+		public function allSections(){
+			$sections = Section::all();
+			$data = [];
+			$data[0] = [
+				'id'=> 0,
+				'text' => 'Seleccione',
+			];
+
+			foreach($sections as $key => $value){
+				$data[$key + 1] = [
+					'id' => $value->id,
+					'text' => $value->name,
+				];
+			}
+			return response()->json($data);
+		}
+
+
+
+
 
 		/**
 		 * Show the form for creating a new resource.

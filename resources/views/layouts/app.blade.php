@@ -23,20 +23,26 @@
 		<link href="{{ asset('css/app.css')}}" rel="stylesheet" type="text/css">
 	</head>
 	<body>
-		@yield('content')	
 
+		<div id="app">
+		@yield('content')	
+		</div>
 		 <!-- jQuery -->
   	<script src="{{ asset('vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
+
   	<!-- Bootstrap Core JavaScript -->
 		<script src="{{ asset('vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
 		<!-- Slimscroll JavaScript -->
 		<script src="{{ asset('dist/js/jquery.slimscroll.js') }}"></script>
 		
 		<!-- Stack --->
 		@stack('scripts-footer')
-
+<script src="{{ asset('js/app.js') }}"></script>
+		
+	
 		<!-- Init JavaScript -->
 		<script src="{{ asset('dist/js/init.js') }}"></script>
-
+		
 	</body>
 </html>

@@ -26,6 +26,18 @@ class DepartmentController extends Controller
 
 		}
 
+
+
+
+		##Vue axios function
+		public function allDepartments(){
+			$departments = Department::all();
+			return $departments;
+		}
+
+
+
+
 		/**
 		 * Show the form for creating a new resource.
 		 *

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\User;
 use Validator;
 use App\Role;
@@ -15,11 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Support\Facades\DB;
 
-
-
-
-class UserController extends Controller
-{
+class UserController extends Controller {
 		/**
 		 * Display a listing of the resource.
 		 *
@@ -38,22 +33,30 @@ class UserController extends Controller
 			return view('staff.campus',compact('sections' ,'buildings' ));
 		}
 
-		/**
-		 * Show the form for creating a new resource.
-		 *
-		 * @return \Illuminate\Http\Response
-		 */
+
+		##For searching users
+		public function selectUsers(Request $request){
+
+			//validar que solo sean usuarios que pueden recibir tickets
+			$keyword = $request->keyword;
+			$users = User::where('name','like','%'.$keyword.'%')
+								->orWhere('email','like','%'.$keyword.'%')
+								->orWhere('last_name','like','%'.$keyword.'%')
+								->select('id','name','email',
+												'last_name','second_last_name',
+												DB::raw('CONCAT(users.name, " | ", users.email) AS full_name'))
+								->orderBy('name','asc')
+								->get();
+			return ['users' => $users];
+		}
+
+	
 		public function create()
 		{
 				//
 		}
 
-		/**
-		 * Store a newly created resource in storage.
-		 *
-		 * @param  \Illuminate\Http\Request  $request
-		 * @return \Illuminate\Http\Response
-		 */
+		
 		public function store(CreateUserRequest $request){
 
 			$user = new User();
@@ -82,6 +85,7 @@ class UserController extends Controller
 			
 		}
 
+		##Model create students
 		public function storeStudents(Request $request){
 
 			$validator = Validator::make($request->all() , [
@@ -137,49 +141,35 @@ class UserController extends Controller
 		}
 
 
+		public function show($id){
+			$users = User::where('department_id',$id)->get();
+			$data = [];
+			$data[0] = [
+				'id' => 0,
+				'text' => 'Seleccione'
+			];
 
-		/**password
-		 * Display the specified resource.
-		 *
-		 * @param  int  $id
-		 * @return \Illuminate\Http\Response
-		 */
-		public function show($id)
-		{
+			foreach($users as $key => $value){
+				$data[$key + 1] = [
+					'id' => $value->id,
+					'text' => $value->name
+				];
+			}
+
+			return response()->json($data);
+			
+		}
+
+		public function edit($id){
 				//
 		}
 
-		/**
-		 * Show the form for editing the specified resource.
-		 *
-		 * @param  int  $id
-		 * @return \Illuminate\Http\Response
-		 */
-		public function edit($id)
-		{
+
+		public function update(Request $request, $id){
 				//
 		}
 
-		/**
-		 * Update the specified resource in storage.
-		 *
-		 * @param  \Illuminate\Http\Request  $request
-		 * @param  int  $id
-		 * @return \Illuminate\Http\Response
-		 */
-		public function update(Request $request, $id)
-		{
-				//
-		}
-
-		/**
-		 * Remove the specified resource from storage.
-		 *
-		 * @param  int  $id
-		 * @return \Illuminate\Http\Response
-		 */
-		public function destroy($id)
-		{
+		public function destroy($id){
 				//
 		}
 }

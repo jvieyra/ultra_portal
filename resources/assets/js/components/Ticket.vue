@@ -5,27 +5,13 @@
 			<i class="zmdi zmdi-account-add mr-10"></i>Crear Ticket</h6>
 		<hr class="light-grey-hr">
 		<div class="row">
-			<div class="col-md-6">
-				<div class="form-group ">
-					<label class="control-label mb-10">Seleciona un Departamento</label>
-					<select class="form-control select2">
-						<option>Selecciona</option>
-						<option value=""></option>
-					</select>
-				</div>
-			</div>
-			<!--/span-->
-			<div class="col-md-6 ">
+			
+			<div class="col-md-12 ">
 				<div class="form-group ">
 					<label class="control-label mb-10">Seleciona un Usuario</label>
-					<select class="form-control select2">
-						<option>Selecciona</option>
-						<option value="">Hugo Flores | hflores@itjvallereal.edu.mx </option>
-						<option value="">Pablo Vieyra | pvieyra@itjvallereal.edu.mx </option>
-						<option value="">Israel San Luis | igarcia@itjvallereal.edu.mx </option>
-						<option value="">Moises Camara | mcamara@itjvallereal.edu.mx </option>
-						<option value="">Saul Fernandez | sfernandez@itjvallereal.edu.mx </option>
-					</select>
+					<v-select :on-search="getUsers" :options="users" :onChange="selectUser"
+						placeholder="Buscar usuarios" label="full_name">
+					</v-select>
 				</div>
 			</div>
 			<!--/span-->
@@ -75,50 +61,67 @@
 		</div>
 
 	</div>
-				<!-- /row -->
-
-
-				<div class="row">
+	<!-- /row -->
+		<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
 			<label class="control-label mb-10 text-left">Detalle del ticket</label>
 			<textarea class="form-control" rows="5"></textarea>
 		</div>
-					</div>
-				</div>
-			<div class="form-actions">
+	</div>
+</div>
+	<div class="form-actions">
 				<button type="submit" class="btn btn-success btn-icon left-icon mr-10 pull-left">
 				 <i class="fa fa-check"></i> <span>Guardar</span>
 				</button>
 				<button type="button" class="btn btn-warning pull-left">Cancelar</button>
 				<div class="clearfix"></div>
-			</div>
+	</div>
 	</form>
 </template>
 
 <script>
 
 	import axios from 'axios'
+	import vSelect from 'vue-select'
+
     export default {
     	data(){
     		return {
-    			sections : [],
-    			section:''
+    			
+    			user:'',
+    			users:[],
+    			idUser:'',
+    			loading:''
     		}
     	},
 
-    	created:function(){
-    		this.getSections();
+    	components: {
+    		vSelect
     	},
 
     	methods:{
 
-    		getSections:function(){
-    			var urlSections = '/ultraportal/public/staff/get-sections';
-    			axios.get(urlSections).then(response => {
+    		selectUser(user){
+    			this.loading = true;
+    			this.idUser = user.id;
 
-    				console.log(response);
-    				this.sections = response.data;
+    		},
+
+    		getUsers(search,loading){
+    			let me=this;
+    			var urlUsers = '/ultraportal/public/staff/selectUsers?keyword='+search;
+    			loading(true)
+    			axios.get(urlUsers).then(function(response){
+    				let sUsers = response.data;
+    				console.log(response.data);
+    				q:search
+    				me.users = sUsers.users;
+    				loading(false)
+
+    			})
+    			.catch(function(error){
+    				console.log(error);
     			});
     		}
     	}

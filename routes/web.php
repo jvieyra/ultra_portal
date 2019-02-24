@@ -21,33 +21,38 @@ Route::group(['prefix' => 'staff'],function(){
 	Route::get('home', 'EmployeeController@index')->name('home.employee');
 	Route::get('campus','UserController@campus')->name('campus.staff');
 
+	##users-students
 	Route::resource('users','UserController');
 	Route::post('createStudents','UserController@storeStudents')->name('create-students');
+	Route::get('selectUsers','UserController@selectUsers');
 
+	##sections
 	Route::resource('sections','SectionController');
 	Route::get('/dtsec','SectionController@getSections')->name('datatable.sections');
 	Route::get('get-sections','SectionController@allSections');
 
+	##departments
 	Route::resource('departments','DepartmentController');
 	Route::get('/dtdep','DepartmentController@getDepartments')->name('datatable.departments');
+	Route::get('get-departments','DepartmentController@allDepartments');
+	
 
-
+	##buildings
 	Route::resource('buildings','BuildingController');
 	Route::resource('places','PlaceController');
 
-	/*Tickets*/
+	##tickets
 	Route::resource('tickets','TicketController');
 	Route::get('charts-tickets','TicketController@charts')->name('tickets.charts');
 
-	//students
+	##students
 	Route::get('crear-plan','StudentController@createPlanStudent')->name('crear-plan');
 	Route::post('planStudent','StudentController@planStudent')->name('plan-student.create');
 
-	/*afterschool admin*/
+	##afterschool admin
 	Route::resource('workshops','WorkshopController');
 
 });
-
 
 Route::group(['prefix' => 'student'],function(){
 	Route::get('home', 'StudentController@index')->name('home.student');

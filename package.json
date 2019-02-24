@@ -11,9 +11,12 @@
     },
     "devDependencies": {
         "axios": "^0.18",
-      
+        "cross-env": "^5.2.0",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "vue-select": "^2.5.1"
     }
 }

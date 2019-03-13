@@ -33,7 +33,8 @@ class CreateUserRequest extends FormRequest
 			'department_id' => 'required',
 			'email' => 'email|required|unique:users,email',
 			'password' => 'required',
-			'roles' => 'required'
+			'roles' => 'required',
+			'allow_ticket' => 'required'
 
 		];
 	}

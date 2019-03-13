@@ -17,6 +17,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "vue-progressbar": "^0.7.5",
         "vue-select": "^2.5.1"
     }
 }

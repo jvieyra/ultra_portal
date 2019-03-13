@@ -5,7 +5,8 @@
 @push('scripts-header')
 <!-- Jasny-bootstrap CSS -->
 		<link href="{{ asset('vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
-	
+		<!--alerts CSS -->
+		<link href="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.css') }}" rel="stylesheet" type="text/css">
 @endpush
 
 @section('content')
@@ -65,6 +66,7 @@
 										<!-- Form wrap -->
 										<div class="form-wrap">
 											<ticket></ticket>
+											<vue-progress-bar></vue-progress-bar>
 										</div>
 										<!-- ./Form-wrap-->
 									</div>
@@ -99,6 +101,10 @@
 		
 		<!-- Bootstrap Switch JavaScript -->
 		<script src="{{ asset('vendors/bower_components/bootstrap-switch/dist/js/bootstrap-switch.min.js') }}"></script>
+
+		<!-- Sweet-Alert  -->
+		<script src="{{ asset('vendors/bower_components/sweetalert/dist/sweetalert.min.js') }}"></script>
+		<script src="{{ asset('dist/js/sweetalert-data.js') }}"></script>
 	
 
 		@endpush

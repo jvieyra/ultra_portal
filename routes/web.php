@@ -19,12 +19,21 @@ Auth::routes();
 
 Route::group(['prefix' => 'staff'],function(){
 	Route::get('home', 'EmployeeController@index')->name('home.employee');
+	##config Admin
 	Route::get('campus','UserController@campus')->name('campus.staff');
+	Route::get('config-tickets','TicketController@ticketAdmin')->name('tickets.config');
+
+
 
 	##users-students
 	Route::resource('users','UserController');
 	Route::post('createStudents','UserController@storeStudents')->name('create-students');
 	Route::get('selectUsers','UserController@selectUsers');
+
+
+
+	##categories
+	Route::resource('categories','CategoryController');
 
 	##sections
 	Route::resource('sections','SectionController');
@@ -60,11 +69,8 @@ Route::group(['prefix' => 'student'],function(){
 });
 
 
-/*
-$y = new App\Year;
 
-dd($y->isCurrentYear(2));
-*/
+
 
 
 

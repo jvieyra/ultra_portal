@@ -5,7 +5,7 @@
 		<div class="nav-header pull-left">
 			<div class="logo-wrap">
 				<a href="{{route('home.employee') }}">
-					<img class="brand-img" src="{{ asset('img/nav/logo-nav.svg')}}"  width="30" height="30" alt="brand"/>
+					<img class="brand-img" src="{{ asset('img/nav/logo-nav.svg')}}"  width="30" height="30" alt="brand"/>	
 					<span class="brand-text"> {{ Auth::user()->name }} </span>
 				</a>
 			</div>
@@ -22,13 +22,17 @@
 	</div>
 	<div id="mobile_only_nav" class="mobile-only-nav pull-right">
 		<ul class="nav navbar-right top-nav pull-right">
-			<li class="dropdown alert-drp">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="zmdi zmdi-notifications top-nav-icon"></i><span class="top-nav-icon-badge">5</span></a>
+{{-- 			<li class="dropdown alert-drp">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<i class="zmdi zmdi-notifications top-nav-icon"></i>
+					@if($count = Auth::user()->notifications->count())
+						<span class="top-nav-icon-badge">{{ $count }}</span>
+					@endif
+				</a>
 				<ul  class="dropdown-menu alert-dropdown" data-dropdown-in="bounceIn" data-dropdown-out="bounceOut">
 					<li>
 						<div class="notification-box-head-wrap">
 							<span class="notification-box-head pull-left inline-block">Notificaciones</span>
-							<a class="txt-danger pull-right clear-notifications inline-block" href="javascript:void(0)"> Limpiar </a>
 							<div class="clearfix"></div>
 							<hr class="light-grey-hr ma-0"/>
 						</div>
@@ -115,7 +119,9 @@
 						</div>
 					</li>
 				</ul>
-			</li>
+			</li> --}}
+			<notification></notification>
+
 			<li class="dropdown auth-drp">
 				<a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown">
 					<img src="{{ asset('img/nav/'.Auth::user()->image)}}" alt="user_auth" class="user-auth-img img-circle"/>

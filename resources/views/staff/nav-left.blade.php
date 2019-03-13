@@ -138,6 +138,9 @@
 				<li>
 					<a href="{{ route('campus.staff') }}">Campus</a>
 				</li>
+				<li>
+					<a href="{{ route('tickets.config') }}">Tickets</a>
+				</li>
 			</ul>
 		</li>
 		<li>

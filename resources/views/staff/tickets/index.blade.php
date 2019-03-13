@@ -42,8 +42,8 @@
 					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 					  <ol class="breadcrumb">
 						<li><a href="{{ route('home.employee') }}">Incio</a></li>
-						
-						<li class="active"><span>Tickets</span></li>
+						<li><span>Tickets</span></li>
+						<li class="active"><span>Entrada</span></li>
 					  </ol>
 					</div>
 					<!-- /Breadcrumb -->
@@ -63,20 +63,20 @@
 													<a href="{{ route('tickets.create') }}" title="ticket" class="btn btn-success btn-block">
 														Crear Ticket
 													</a>
-												
 												</div>
 												<ul class="inbox-nav mb-30">
 													<li class="active">
-														<a href="#"><i class="zmdi zmdi-inbox"></i> Bandeja de entrada <span class="label label-danger ml-10">2</span></a>
+														<a href="#">
+															<i class="zmdi zmdi-inbox"></i> 
+															Bandeja de entrada 
+															<span class="label label-danger ml-10">
+														{{ $unreadNotifications->count() }}</span></a>
 													</li>
 													<li>
 														<a href="#"><i class="zmdi zmdi-email-open"></i> Enviados</a>
 													</li>
 													<li>
 														<a href="#"><i class="zmdi zmdi-folder-outline"></i> Finalizados <span class="label label-info ml-10">30</span></a>
-													</li>
-													<li>
-														<a href="#"><i class="zmdi zmdi-delete"></i> Trash</a>
 													</li>
 												</ul>
 											</aside>
@@ -110,6 +110,7 @@
 															<div class="mail-option pl-15 pr-15">
 																<!-- Pagination tickets -->
 																<ul class="unstyled inbox-pagination">
+
 																	<li><span>1-10 de 3</span></li>
 																	<li>
 																		<a class="pl-15 pr-15" href="#"><i class="fa fa-angle-left  pagination-left"></i></a>
@@ -125,16 +126,33 @@
 																<table class="table table-inbox table-hover mb-0">
 																	<tbody>
 
-																		<tr class="unread">
-																			<td class="view-message  dont-show">Usuario Demo<span class="label label-success pull-right">Nuevo</span></td>
-																			<td class="view-message ">Necesito ayuda con un archivo de excel.</td>
+																		@foreach($notifications as $notification)
+																			
+																			<tr class="{{ $notification->read_at ? '' : 'unread' }}">
+																				
+																			<td class="view-message  dont-show">
+																				<a href="{{ route('tickets.show',$notification->id ) }}" > 
+																				{{ $notification->data['send_user_name']}}
+																				<span class="label label-success pull-right">{{ $notification->read_at ? '' : 'nuevo' }}
+																				</span>
+																				</a>
+																			</td>
+																			<td class="view-message ">
+																				<a href="{{ route('tickets.show',$notification->id ) }}">
+																				{{ str_limit($notification->data['description'],40) }}
+																				</a>
+																			</td>
 																			<td class="view-message  text-right">
 																				<i class="zmdi zmdi-attachment inline-block mr-15 font-16"></i>
-																				<span  class="time-chat-history inline-block">9:27 AM</span>
+																				<span  class="time-chat-history inline-block">
+																					{{ App\Ticket::find($notification->data['id'])->created_at->diffForHumans() }}
+																				</span>
 																			</td>
-																		</tr>
+																			</tr>
+																		@endforeach
+																		
 
-																		<tr class="">
+																		{{-- <tr class="">
 																			<td class="view-message dont-show">Usuario Demo</td>
 																			<td class="view-message">No salen llamadas.
 																			<td class="view-message text-right">
@@ -149,7 +167,7 @@
 																				<i class="zmdi zmdi-attachment inline-block mr-15 font-16"></i>
 																				<span  class="time-chat-history inline-block">Diciembre 15</span>
 																			</td>
-																		</tr>
+																		</tr> --}}
 
 																	</tbody>
 																</table>

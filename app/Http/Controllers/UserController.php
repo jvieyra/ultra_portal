@@ -12,6 +12,7 @@ use App\Employee;
 use App\Department;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateUserRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller {
@@ -33,20 +34,29 @@ class UserController extends Controller {
 			return view('staff.campus',compact('sections' ,'buildings' ));
 		}
 
-
 		##For searching users
 		public function selectUsers(Request $request){
-
 			//validar que solo sean usuarios que pueden recibir tickets
 			$keyword = $request->keyword;
-			$users = User::where('name','like','%'.$keyword.'%')
+			
+			/*$users = User::
+								where('name','like','%'.$keyword.'%')
 								->orWhere('email','like','%'.$keyword.'%')
 								->orWhere('last_name','like','%'.$keyword.'%')
+								->whereIn('allow_ticket','=',1)
 								->select('id','name','email',
 												'last_name','second_last_name',
 												DB::raw('CONCAT(users.name, " | ", users.email) AS full_name'))
 								->orderBy('name','asc')
-								->get();
+								->get();*/
+
+			$users = User::where('allow_ticket','=',1)
+										->where('id','!=',Auth::user()->id)
+										->select('id','name','email','last_name','second_last_name',
+												DB::raw('CONCAT(users.name, " | ", users.email) AS full_name'))
+										->orderBy('name','asc')
+										->get();
+
 			return ['users' => $users];
 		}
 
@@ -71,6 +81,7 @@ class UserController extends Controller {
 			$user->password = bcrypt($request->password);
 			$user->department_id = $request->department_id;
 			$user->image = $gender;
+			$user->allow_ticket = $request->allow_ticket;
 
 			$user->save();
 

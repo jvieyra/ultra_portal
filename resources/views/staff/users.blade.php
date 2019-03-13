@@ -222,7 +222,7 @@
 														</div>
 
 														<div class="row">
-															<div class="col-md-12">
+															<div class="col-md-6">
 																<div class="form-group mb-30 {{ $errors->has('roles') ? ' has-error has-danger' : '' }}">
 																	<label class="control-label mb-10 text-left">Roles del usuario</label>
 																	@foreach($roles as $id => $name)
@@ -237,6 +237,24 @@
 																				<div class="help-block with-errors">
 																					<ul class="list-unstyled">
 																						<li>Selecciona al menos un rol.</li>
+																					</ul>
+																				</div>
+																		@endif
+																</div>
+															</div>
+
+															<div class="col-md-6">
+																<div class="form-group mb-30" {{ $errors->has('allow_ticket') ? ' has-error has-danger' : '' }}>
+																	<label class="control-label mb-10 text-left">Recibe tickets</label>
+																	<select class="form-control" name="allow_ticket" >
+																		<option disabled value="" >¿El usuario puede recibir tickets?</option>
+																			<option value="0">No</option>
+																			<option value="1">Si</option>
+																	</select>
+																		@if ($errors->has('allow_ticket'))
+																				<div class="help-block with-errors">
+																					<ul class="list-unstyled">
+																						<li>Indica si el usuario puede recibir tickets.</li>
 																					</ul>
 																				</div>
 																		@endif

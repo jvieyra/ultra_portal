@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,17 +22,16 @@ Route::group(['prefix' => 'staff'],function(){
 	Route::get('campus','UserController@campus')->name('campus.staff');
 	Route::get('config-tickets','TicketController@ticketAdmin')->name('tickets.config');
 
-
-
 	##users-students
 	Route::resource('users','UserController');
 	Route::post('createStudents','UserController@storeStudents')->name('create-students');
 	Route::get('selectUsers','UserController@selectUsers');
 
-
-
 	##categories
 	Route::resource('categories','CategoryController');
+	Route::get('/dtcat','CategoryController@getCategories')->name('datatable.categories');
+	Route::get('get-categories','CategoryController@allCategories');
+	Route::get('allCategories','CategoryController@jsonCategories');
 
 	##sections
 	Route::resource('sections','SectionController');
@@ -44,7 +42,6 @@ Route::group(['prefix' => 'staff'],function(){
 	Route::resource('departments','DepartmentController');
 	Route::get('/dtdep','DepartmentController@getDepartments')->name('datatable.departments');
 	Route::get('get-departments','DepartmentController@allDepartments');
-	
 
 	##buildings
 	Route::resource('buildings','BuildingController');
@@ -68,8 +65,8 @@ Route::group(['prefix' => 'student'],function(){
 	Route::resource('workshops','StudentWorkshopController',[ 'as' => 'student']);
 });
 
-
-
+##Pruebas para envio de correo electronico.
+Route::get('email','StudentController@emailView');
 
 
 

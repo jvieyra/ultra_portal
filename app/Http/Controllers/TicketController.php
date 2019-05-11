@@ -1,13 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
+
+use Mail;
+use App\Year;
+use App\User;
 
 use Validator;
 use App\Ticket;
 use App\Category;
 use App\Department;
-use App\Year;
-use App\User;
 
 use Carbon\Carbon;
 
@@ -18,7 +19,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketCreateRequest;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Pagination\Paginator;
-
 
 class TicketController extends Controller {
 
@@ -50,14 +50,26 @@ class TicketController extends Controller {
 		return view('staff.admin.tickets');
 	}
 
-		## Tickets
-		public function store(TicketCreateRequest $request){
+	public function sendMailTicket($userSend,$userReceive){
+		$userS = User::find($userSend);
+		$userR = User::find($userReceive);
 
-			//if(!$request->ajax()) return redirect('staff/home');
-			$user = Auth::user();
-			$year = new Year();
-			$currentYear = $year->currentYear();
-			$today = Carbon::now('America/Mexico_City');
+		//$data = array('name' => "Sam","body"=>"Email");
+		$data = [ $userS, $userR];
+		Mail::send('emails.ticket',["data" => $data],function($message) use ($userS,$userR){
+			$message->to($userR->email,'Tickets Itjvallereal')
+							->subject('Nuevo ticket Recibido');
+			$message->from($userS->email ,$userS->name ." ".$userS->last_name);
+		});
+	}
+
+	## Tickets
+	public function store(TicketCreateRequest $request){
+		//if(!$request->ajax()) return redirect('staff/home');
+		$user = Auth::user();
+		$year = new Year();
+		$currentYear = $year->currentYear();
+		$today = Carbon::now('America/Mexico_City');
 
 			try{
 
@@ -82,12 +94,24 @@ class TicketController extends Controller {
 
 
 				if($request->hasFile('files')){
+
+					##dd($request->file('files'));	
 				$files = $request->file('files');
 
-					for(  $i = 0; $i < sizeof($files); $i++ ){
+					/*for(  $i = 0; $i < sizeof($files); $i++ ){
 						DB::table('file_ticket')
 										->insert(['ticket_id' => $ticket->id ,'name' => $files[$i]->getClientOriginalName(),'file_path' => $files[$i]->store('tickets') ]);
+					}*/
+
+
+					for(  $i = 0; $i < sizeof($files); $i++ ){
+						\Storage::disk('local')->put('tickets/'.$ticket->id.'_'.$files[$i]->getClientOriginalName(),  \File::get($files[$i]));
+						DB::table('file_ticket')
+										->insert(['ticket_id' => $ticket->id ,
+															'name' => $files[$i]->getClientOriginalName(),
+															'file_path' => 'tickets/'.$ticket->id.'_'.$files[$i]->getClientOriginalName() ]);
 					}
+
 
 				}
 
@@ -95,6 +119,7 @@ class TicketController extends Controller {
 				$recipient = User::find($receiveUser);
 				$recipient->notify(new TicketSend($ticket));
 
+				$this->sendMailTicket($sendUser,$receiveUser);
 				DB::commit();
 				
 			}catch( Exception $e){
@@ -102,18 +127,24 @@ class TicketController extends Controller {
 				return $e;
 			}
  
-			return  "exito";
 			
 		}
 
 		public function show($id) {
-			DatabaseNotification::find($id)->markAsRead();
+			$notification = DatabaseNotification::find($id);
+			
+			if($notification->markAsRead()){
+					$notification->markAsRead();
+			}
+			
 			$unreadNotifications = Auth::user()->unreadNotifications;
 			$ticket = Ticket::findOrFail(DatabaseNotification::find($id)->data['id']);
+			//dd(DatabaseNotification::find($id)->data['id']);
 			$userSend = User::findOrFail($ticket->users->first()->pivot->first()->send_user_id);
-			$files = DB::table('file_ticket')->where('ticket_id', $id)->get();
+
+			$files = DB::table('file_ticket')->where('ticket_id', DatabaseNotification::find($id)->data['id'])->get();
 			
-			return view('staff.tickets.show',compact('ticket','unreadNotifications','userSend','files'));
+			return view('staff.tickets.show',compact('ticket','unreadNotifications','userSend','files','notification'));
 		}
 
 		/**
@@ -122,8 +153,7 @@ class TicketController extends Controller {
 		 * @param  int  $id
 		 * @return \Illuminate\Http\Response
 		 */
-		public function edit($id)
-		{
+		public function edit($id){
 				//
 		}
 
@@ -134,9 +164,8 @@ class TicketController extends Controller {
 		 * @param  int  $id
 		 * @return \Illuminate\Http\Response
 		 */
-		public function update(Request $request, $id)
-		{
-				//
+		public function update(Request $request, $id){
+			//
 		}
 
 		/**

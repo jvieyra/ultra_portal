@@ -21,12 +21,8 @@ class DepartmentController extends Controller
 		public function getDepartments(){
 			/* Datatables  departments */
 			$departments = Department::select(['id','name']);
-
 			return Datatables::of($departments)->make(true);
-
 		}
-
-
 
 
 		##Vue axios function
@@ -34,9 +30,6 @@ class DepartmentController extends Controller
 			$departments = Department::all();
 			return $departments;
 		}
-
-
-
 
 		/**
 		 * Show the form for creating a new resource.

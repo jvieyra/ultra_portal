@@ -30,6 +30,12 @@ class StudentController extends Controller
 		//
 	}
 
+
+
+	public function emailView(){
+		return view('emails.ticket');
+	}
+
 	/**
 	 * Store a newly created resource in storage.
 	 *

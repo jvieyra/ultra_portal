@@ -23,7 +23,6 @@
 	
 	<!-- /Right Sidebar Menu -->
 		
-		
 	<!-- Right Sidebar Backdrop -->
 	<div class="right-sidebar-backdrop"></div>
 	<!-- /Right Sidebar Backdrop -->
@@ -58,7 +57,7 @@
 								<div class="row">
 									<aside class="col-lg-3 col-md-4 pr-0">
 										<div class="mt-20 mb-20 ml-15 mr-15">
-											<a href="" data-toggle="modal" title="Compose" class="btn btn-success btn-block">
+											<a href="{{ route('tickets.create') }}" data-toggle="modal" title="Compose" class="btn btn-success btn-block">
 											Nuevo
 											</a>
 										</div>
@@ -97,20 +96,14 @@
 													<div class="heading-inbox">
 														<div class="container-fluid">
 															<div class="pull-left">
-																<div class="compose-btn">
-																	<a class="btn btn-sm mr-10" href="#" data-toggle="modal" title="Compose"><i class="zmdi zmdi-chevron-left"></i></a>
-																</div>
+															
 															</div>
 															<div class="pull-right text-right">
+																Ticket ID #{{ $ticket->id }}
 																<button class="btn btn-sm mr-10" title="" type="button">
 																	<i class="zmdi zmdi-print"></i>
 																</button>
-																<div class="inline-block dropdown">
-																	<a class="dropdown-t	oggle" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="zmdi zmdi-more"></i></a>
-																	<ul class="dropdown-menu bullet dropdown-menu-right" role="menu">
-																		<li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>Reasignar</a></li>
-																	</ul>
-																</div>
+																
 															</div>
 														</div>
 														<hr class="light-grey-hr mt-10 mb-15">	
@@ -122,11 +115,14 @@
 															</div>
 															<div class="sender-details   pull-left">
 																<span class="capitalize-font pr-5 txt-dark block font-15 weight-500 head-font">
-																	{{ $userSend->name }} {{ $userSend->last_name }}
+																	de {{ $userSend->name }} {{ $userSend->last_name }}
 																</span>
 																<span class="block">
-																	para 
-																	<span>mi</span>
+																	@if($ticket->end_datetime == null)
+																	<span class="label label-warning  capitalize-font inline-block ml-10">Pendiente</span>
+																	@else
+																	<span class="label label-success capitalize-font inline-block ml-10">Finalizado</span>
+																	@endif
 																</span>	
 															</div>	
 															<div class="pull-right">
@@ -134,18 +130,18 @@
 																	<span class="inbox-detail-time-1 font-12">{{$ticket->created_at->format('d-m-y h:s')}}</span>
 																	<span class="inbox-detail-time-2 font-12 inline-block">({{$ticket->created_at->diffForHumans()}})</span>
 																</div>
-																<div class="inline-block dropdown">
-																	<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="zmdi   zmdi-more-vert"></i></a>
-																	<ul class="dropdown-menu bullet dropdown-menu-right" role="menu">
-																		<li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>Mensaje directo</a></li>
-																	</ul>
-																</div>
 															</div>
 															<div class="clearfix"></div>
 														</div>
 													</div>
 													<div class="container-fluid view-mail mt-20">
 														<p>{{ $ticket->description }}</p>
+															
+													</div>
+													<div class="container-fluid mt-20">
+														<button class="btn  btn-success">Terminar</button>
+														<button class="btn btn-warning">Reasignar</button>
+														<button class="btn btn-primary">Enlazar</button>
 													</div>
 													<hr class="light-grey-hr mt-20 mb-20">
 														<!--  Attachment-mail -->
@@ -153,21 +149,26 @@
 															<div class="container-fluid attachment-mail mt-30 mb-30">
 														<div class="download-blocks mb-20">
 															<span class="pr-15"><i class="zmdi zmdi-attachment-alt pr-10"></i>{{ $files->count() }} Adjunto(s)</span>
-															
 														</div>
 														<ul>
 															@foreach($files as $file)
 															<li>
 																<a href="#" class="atch-thumb" download>
 																	<div class="file-name">
+																		{{-- <a href="/ultraportal/storage/app/{{ $file->file_path }}" download="">
+																			<i class="zmdi zmdi-download pr-10"></i>{{$file->name}}
+																		</a>  --}}
 																		<a href="/ultraportal/storage/app/{{ $file->file_path }}" download="">
 																			<i class="zmdi zmdi-download pr-10"></i>{{$file->name}}
-																		</a>
+																		</a> 
 																	</div>
 																</a>
 															</li>
 															@endforeach
 														</ul>
+
+
+
 													</div>
 														@endif
 													<!-- attached-->

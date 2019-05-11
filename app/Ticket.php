@@ -23,7 +23,9 @@ class Ticket extends Model {
     return $this->belongsToMany('App\Category','ticket_category');
   }
 
-
+  public function comments(){
+    return $this->hasMany('App\Comment');
+  }
   public function getCreatedAtAttribute($date){
   	return new Date($date);
   }

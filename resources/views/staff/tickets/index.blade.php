@@ -4,7 +4,6 @@
 
 @section('content')
 
-
 	<!--Preloader-->
 	<div class="preloader-it">
 		<div class="la-anim-1"></div>
@@ -125,7 +124,7 @@
 															<div class="table-responsive mb-0">
 																<table class="table table-inbox table-hover mb-0">
 																	<tbody>
-
+																		
 																		@foreach($notifications as $notification)
 																			
 																			<tr class="{{ $notification->read_at ? '' : 'unread' }}">

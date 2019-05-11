@@ -12512,12 +12512,13 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_progressbar___default.a, {
 
   mounted: function mounted() {
     var me = this;
-    var url = '/ultraportal/public/staff/categories';
+    var url = '/ultraportal/public/staff/allCategories';
+
     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url).then(function (response) {
-      //console.log(response.data.categories);
-      me.categories = response.data.categories;
+      console.log(response.data);
+      me.categories = response.data;
     }).catch(function (error) {
-      console.log(error);
+      //console.log(error);
     });
   },
 
@@ -12577,12 +12578,12 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_progressbar___default.a, {
       formData.append('civil_protection', me.civil_protection);
       formData.append('description', me.description);
 
-      console.log(formData);
+      //console.log(formData);
 
       __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/ultraportal/public/staff/tickets', formData).then(function (response) {
         me.$Progress.finish();
         me.dataReset();
-        console.log(response);
+        //console.log(response);
         swal({
           title: "Enviado!",
           type: "success",
@@ -13735,7 +13736,7 @@ var render = function() {
             _c("input", {
               ref: "files",
               staticClass: "form-control",
-              attrs: { type: "file", accept: "image/*", multiple: "multiple" },
+              attrs: { type: "file", multiple: "multiple" },
               on: {
                 change: function($event) {
                   _vm.handleFileUploads()

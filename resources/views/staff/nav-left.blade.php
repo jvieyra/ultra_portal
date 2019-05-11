@@ -22,7 +22,7 @@
 					<a href="{{ route('tickets.index') }}">Tickets</a>
 				</li>
 				<li>
-					<a href="#">Crear Ticket</a>
+					<a href="{{ route('tickets.create') }}">Crear Ticket</a>
 				</li>
 				<li>
 					<a href="#">Pendientes</a>

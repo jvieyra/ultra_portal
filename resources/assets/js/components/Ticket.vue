@@ -50,7 +50,7 @@
 			<div class="col-md-12 ">
 				<div class="form-group mb-30">
 			<label class="control-label mb-10 text-left">Subir archivos</label>
-			<input class="form-control" type="file" ref="files" accept="image/*" multiple="multiple" v-on:change="handleFileUploads()">
+			<input class="form-control" type="file" ref="files"  multiple="multiple" v-on:change="handleFileUploads()">
 		</div>
 		</div>
 
@@ -110,13 +110,14 @@ Vue.use(VueProgressBar, {
 
     	mounted(){
   			let me = this;
-  			let url = '/ultraportal/public/staff/categories';
+  			let url = '/ultraportal/public/staff/allCategories';
+           
   			axios.get(url).then(function(response){
-  				//console.log(response.data.categories);
-  				me.categories = response.data.categories;
+  				console.log(response.data);
+  				me.categories = response.data;
   			})
   			.catch(function(error){
-  				console.log(error);
+  				//console.log(error);
   			});
 
     	},
@@ -183,7 +184,7 @@ Vue.use(VueProgressBar, {
 					formData.append('civil_protection', me.civil_protection);
 					formData.append('description', me.description);
 
-					console.log(formData);
+					//console.log(formData);
 
     			axios.post('/ultraportal/public/staff/tickets',
 						
@@ -192,7 +193,7 @@ Vue.use(VueProgressBar, {
     			).then(function(response){
     				me.$Progress.finish();
     				me.dataReset();
-  					console.log(response);
+  					//console.log(response);
   					swal({   
 							title: "Enviado!",
 				      type: "success",
